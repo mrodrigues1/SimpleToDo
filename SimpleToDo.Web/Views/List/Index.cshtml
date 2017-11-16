@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SimpleToDo.Model.Entities.List>
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>To Do Lists</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Task" asp-action="Index" asp-route-listId="@item.ListId">@Html.DisplayFor(modelItem => item.Name)</a>                    
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ListId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ListId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ListId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
