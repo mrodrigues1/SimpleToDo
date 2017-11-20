@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
@@ -19,7 +20,10 @@ namespace SimpleToDo.Service.Implementations
 
         public Task<List<List>> GetToDoLists()
         {
-            return _toDoListRepository.GetToDoLists().ToListAsync();
+            return _toDoListRepository
+                .GetToDoLists()
+                .OrderBy(x => x.Name)
+                .ToListAsync();
         }
 
         public Task<List> GetToDoListById(int id)

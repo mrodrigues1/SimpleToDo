@@ -10,17 +10,16 @@
 <table id="grid-todolist-vue" class="table">
     <thead>
         <tr>
-            <th>
-                Name
-            </th>
-            <th></th>
+            <th v-for="(index, column) in gridColumns" v-on:click="sortBy(column)" >
+                {{ column.name }}
+            </th>            
         </tr>
     </thead>
     <tbody>
 
         <tr v-for="toDoList in toDoLists">
             <td>
-                <a>{{ toDoList.Name }}</a>
+                {{ toDoList.name }}
                 @*<a v-on:click="" asp-controller="Task" asp-action="Index" asp-route-listId="@item.ListId">{{ toDoList.Name }}</a>*@
             </td>
             <td>

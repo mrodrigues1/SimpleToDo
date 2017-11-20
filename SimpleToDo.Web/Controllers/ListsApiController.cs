@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
+using SimpleToDo.Model.ViewModels;
+using SimpleToDo.Service.Contracts;
 
 namespace SimpleToDo.Web.Controllers
 {
@@ -14,17 +15,22 @@ namespace SimpleToDo.Web.Controllers
     public class ListsApiController : Controller
     {
         private readonly ToDoDbContext _context;
+        private readonly IToDoListService _toDoListService;
 
-        public ListsApiController(ToDoDbContext context)
+        public ListsApiController(ToDoDbContext context, IToDoListService toDoListService)
         {
             _context = context;
+            _toDoListService = toDoListService;
         }
 
         // GET: api/ListsApi
         [HttpGet]
-        public IEnumerable<List> GetList()
+        public async Task<ListIndexViewModel> GetList()
         {
-            return _context.List;
+            return new ListIndexViewModel
+            {
+                ToDoLists = await _toDoListService.GetToDoLists()
+            };
         }
 
         // GET: api/ListsApi/5
