@@ -6,14 +6,14 @@ namespace SimpleToDo.Model.ViewModels
     public class ListIndexViewModel
     {
         public IEnumerable<List> ToDoLists { get; set; }
-        public IEnumerable<Column> GridColumns { get; set; }
+        public IEnumerable<string> GridColumns { get; set; }
 
         public ListIndexViewModel()
         {
-            GridColumns = new List<Column>
+            GridColumns = new List<string>
             {
-                new Column { Key = nameof(List.Name), Name = nameof(List.Name) },
-                new Column { Key = string.Empty, Name = string.Empty }
+                nameof(List.Name).ToLower(),
+                "Actions"
             };
         }
     }

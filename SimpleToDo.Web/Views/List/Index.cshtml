@@ -7,36 +7,46 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<table id="grid-todolist-vue" class="table">
-    <thead>
-        <tr>
-            <th v-for="(index, column) in gridColumns" v-on:click="sortBy(column)" >
-                {{ column.name }}
-            </th>            
-        </tr>
-    </thead>
-    <tbody>
+<script type="text/x-template" id="grid-template">
+    <table class="table">
+        <thead>
+            <tr>
+                <th v-for="key in columns"
+                    v-on:click="sortBy(key)"
+                    v-bind:class="{ active: sortKey == key }">
+                    {{ key | capitalize }}
+                    <span class="arrow" v-bind:class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="entry in filteredData">
+                <td v-for="key in columns">
+                    {{entry[key]}}
+                </td>
+            </tr>
 
-        <tr v-for="toDoList in toDoLists">
-            <td>
-                {{ toDoList.name }}
-                @*<a v-on:click="" asp-controller="Task" asp-action="Index" asp-route-listId="@item.ListId">{{ toDoList.Name }}</a>*@
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.ListId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ListId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ListId">Delete</a>*@
-            </td>
-        </tr>
+            <tr v-if="filteredData.length <= 0">
+                <td colspan="2">No Data Found.</td>
+            </tr>
+        </tbody>
+    </table>
+</script>
 
-        <tr v-if="toDoLists.length <= 0">
-            <td colspan="2">
-                No Data Found.
-            </td>            
-        </tr>
 
-    </tbody>
-</table>
+<div id="index-list-grid">
+    <form id="search" class="form-inline">
+        <div class="form-group col-xs-12" style="margin-bottom: 10px">
+            <label> Search: </label> 
+            <input name="query" v-model="searchQuery" class="form-control" />
+        </div>
+    </form>
+    <grid v-bind:data="gridData"
+          v-bind:columns="gridColumns"
+          v-bind:filter-key="searchQuery">
+    </grid>
+</div>
 
 
 @section Scripts {
@@ -44,28 +54,28 @@
 }
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@*<table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-controller="Task" asp-action="Index" asp-route-listId="@item.ListId">@Html.DisplayFor(modelItem => item.Name)</a>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ListId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ListId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ListId">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Task" asp-action="Index" asp-route-listId="@item.ListId">@Html.DisplayFor(modelItem => item.Name)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ListId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ListId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ListId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
