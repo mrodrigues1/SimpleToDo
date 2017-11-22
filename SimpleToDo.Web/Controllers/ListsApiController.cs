@@ -99,7 +99,7 @@ namespace SimpleToDo.Web.Controllers
             _context.List.Add(list);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetList", new { id = list.ListId }, list);
+            return CreatedAtAction("Index", "List", new { id = list.ListId }, list);
         }
 
         // DELETE: api/ListsApi/5

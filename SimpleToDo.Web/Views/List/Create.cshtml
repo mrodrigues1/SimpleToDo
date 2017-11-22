@@ -1,4 +1,4 @@
-﻿@model SimpleToDo.Model.Entities.List
+﻿@*@model SimpleToDo.Model.Entities.List*@
 
 @{
     ViewData["Title"] = "Create";
@@ -10,12 +10,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form v-on:submit.prevent="onSubmit" method="post" id="create-list">
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label for="name" class="control-label"></label>
+                <input v-model="list.name" id="name" class="form-control" />
+                @*<span asp-validation-for="Name" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -29,5 +29,6 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/app/list/create-vue.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

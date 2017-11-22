@@ -55,7 +55,7 @@
 
 $(function () {
     var indexViewModel = GetIndexViewModel();
-    var x = new Vue({
+    new Vue({
         el: '#index-list-grid',
         data: {
             gridData: indexViewModel.toDoLists,
