@@ -3,22 +3,21 @@
         el: '#create-list',
         data: {
             list: {
-                name: ''
+                Name: ''
             }
         },
         methods: {
-            onSubmit: function () {
-                debugger;
+            onSubmit: function () {                
                 var list = this.list;
 
                 $.ajax({
                     url: window.location.origin + '/api/ListsApi',
-                    data: { list: list },
+                    data: JSON.stringify(list),
                     type: 'POST',
                     dataType: 'json',
                     contentType: 'application/json',
                     success: function (response) {
-                        debugger;
+                        window.location.href = response.redirect;
                     },
                     error: function (request, error) {
 

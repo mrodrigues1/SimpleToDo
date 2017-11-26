@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
+using SimpleToDo.Model.Extensions;
 using SimpleToDo.Model.ViewModels;
 using SimpleToDo.Service.Contracts;
 
@@ -96,10 +98,14 @@ namespace SimpleToDo.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.List.Add(list);
-            await _context.SaveChangesAsync();
+            await _toDoListService.CreateToDoList(list);
 
-            return CreatedAtAction("Index", "List", new { id = list.ListId }, list);
+            this.AddAlertSuccess($"{list.Name} created successfully.");
+
+
+            var redirectUrl = Url.Action("Index", "List");
+
+            return CreatedAtAction("Index", "List", new { id = list.ListId }, new { data = list, redirect = redirectUrl });
         }
 
         // DELETE: api/ListsApi/5

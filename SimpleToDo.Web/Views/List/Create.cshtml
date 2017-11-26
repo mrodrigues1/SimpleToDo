@@ -13,8 +13,8 @@
         <form v-on:submit.prevent="onSubmit" method="post" id="create-list">
             @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <div class="form-group">
-                <label for="name" class="control-label"></label>
-                <input v-model="list.name" id="name" class="form-control" />
+                <label for="name" class="control-label">Name:</label>
+                <input v-model="list.Name" id="name" class="form-control" />
                 @*<span asp-validation-for="Name" class="text-danger"></span>*@
             </div>
             <div class="form-group">
