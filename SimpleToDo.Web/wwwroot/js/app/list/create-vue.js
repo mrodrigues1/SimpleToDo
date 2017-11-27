@@ -1,10 +1,13 @@
-﻿$(function () {
+﻿(function (Vue, VeeValidate) {
+    Vue.use(VeeValidate);
+
     var createList = new Vue({
         el: '#create-list',
         data: {
             list: {
                 Name: ''
-            }
+            },
+            errorMessage: ''
         },
         methods: {
             onSubmit: function () {                
@@ -26,4 +29,4 @@
             }
         }
     });
-});
+})(Vue, VeeValidate);

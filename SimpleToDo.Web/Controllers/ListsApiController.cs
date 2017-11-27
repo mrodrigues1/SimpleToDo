@@ -102,7 +102,6 @@ namespace SimpleToDo.Web.Controllers
 
             this.AddAlertSuccess($"{list.Name} created successfully.");
 
-
             var redirectUrl = Url.Action("Index", "List");
 
             return CreatedAtAction("Index", "List", new { id = list.ListId }, new { data = list, redirect = redirectUrl });
