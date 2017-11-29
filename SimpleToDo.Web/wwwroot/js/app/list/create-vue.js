@@ -1,32 +1,41 @@
 ﻿(function (Vue, VeeValidate) {
-    Vue.use(VeeValidate);
+    if (document.querySelector('#create-todo')) {
+        Vue.use(VeeValidate);
 
-    var createList = new Vue({
-        el: '#create-list',
-        data: {
-            list: {
-                Name: ''
+        var createList = new Vue({
+            el: '#create-todo',
+            data: {
+                list: {
+                    Name: ''
+                },
+                name: '',
+                errorMessage: ''
             },
-            errorMessage: ''
-        },
-        methods: {
-            onSubmit: function () {                
-                var list = this.list;
+            methods: {
+                onSubmit: function () {
+                    this.$validator.validateAll().then(result => {
+                        if (result) {
+                            var list = this.list;
 
-                $.ajax({
-                    url: window.location.origin + '/api/ListsApi',
-                    data: JSON.stringify(list),
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    success: function (response) {
-                        window.location.href = response.redirect;
-                    },
-                    error: function (request, error) {
+                            $.ajax({
+                                url: window.location.origin + '/api/ListsApi',
+                                data: JSON.stringify(list),
+                                type: 'POST',
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    window.location.href = response.redirect;
+                                },
+                                error: function (request, error) {
 
-                    }
-                });
+                                }
+                            });
+                        } else {
+                            this.errorMessage = 'Please fix all errors';
+                        }
+                    });
+                }
             }
-        }
-    });
+        });
+    }
 })(Vue, VeeValidate);
