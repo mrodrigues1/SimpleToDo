@@ -14,17 +14,12 @@
             <div v-if="errorMessage.length" class="alert alert-danger">
                 {{ errorMessage }}
             </div>
-            <div :class="{ 'form-group': true, 'has-error': errors.has('list.Name'), 'has-success': list.Name.length && !errors.has('list.Name') }">
-                <label for="name" class="control-label">Name:</label>
-                <input autofocus v-model="list.Name" v-validate="'required|min:250'" id="name" class="form-control" />
-                <span v-show="errors.has('list.Name')" class="text-danger">{{ errors.first('list.Name') }}</span>
-            </div>
-            
-            <div :class="{ 'form-group': true, 'has-error': errors.has('name'), 'has-success': name.length && !errors.has('name') }">
-                <label for="name">Name</label>
-                <input autofocus v-model="name" v-validate="'required|min:5'" class="form-control" name="name" type="text" />
+            <div :class="{ 'form-group': true, 'has-error': errors.has('name'), 'has-success': list.name.length && !errors.has('name') }">
+                <label for="name">Name:</label>
+                <input autofocus v-model="list.name" v-validate="'required|min:5'" class="form-control" id="name" name="name" type="text" />
                 <span v-show="errors.has('name')" class="text-danger">{{ errors.first('name') }}</span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

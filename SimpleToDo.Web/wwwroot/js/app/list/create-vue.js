@@ -4,12 +4,13 @@
 
         var createList = new Vue({
             el: '#create-todo',
-            data: {
-                list: {
-                    Name: ''
-                },
-                name: '',
-                errorMessage: ''
+            data: function () {
+                return {
+                    list: {
+                        name: ''
+                    },
+                    errorMessage: ''
+                }
             },
             methods: {
                 onSubmit: function () {
