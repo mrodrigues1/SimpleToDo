@@ -46,24 +46,35 @@
         },
         methods: {
             sortBy: function(key) {
-                this.sortKey = key
+                this.sortKey = key;
                 this.sortOrders[key] = this.sortOrders[key] * -1;
             }
         }
     });
 
 
-$(function () {
+(function (Vue, Vuetable) {
+    Vue.use(Vuetable);
+
     var indexViewModel = GetIndexViewModel();
-    new Vue({
+    var vueIndex = new Vue({
         el: '#index-list-grid',
         data: {
             gridData: indexViewModel.toDoLists,
             gridColumns: indexViewModel.gridColumns,
-            searchQuery: '',
+            searchQuery: ''
         }
     });
-});
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            columns: [
+                'Name'
+            ]
+        }
+    });
+})(Vue, VeeValidate);
 
 function GetIndexViewModel() {
     var indexViewModel;

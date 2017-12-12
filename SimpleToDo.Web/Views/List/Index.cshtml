@@ -1,5 +1,4 @@
-﻿@model IEnumerable<SimpleToDo.Model.Entities.List>
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 <h2>To Do Lists</h2>
@@ -23,7 +22,7 @@
         <tbody>
             <tr v-for="entry in filteredData">
                 <td v-for="key in columns">
-                    {{entry[key]}}
+                    {{ entry[key] }}
                 </td>
             </tr>
 
@@ -34,11 +33,23 @@
     </table>
 </script>
 
+<template>
+    <vuetable api-url="/api/ListsApi"
+              :fields="columns">
+    </vuetable>
+</template>
+
+
+<div id="app">
+    <div class="ui container">
+        <my-vuetable></my-vuetable>
+    </div>
+</div>
 
 <div id="index-list-grid">
     <form id="search" class="form-inline">
         <div class="form-group col-xs-12" style="margin-bottom: 10px">
-            <label> Search: </label> 
+            <label> Search: </label>
             <input name="query" v-model="searchQuery" class="form-control" />
         </div>
     </form>
