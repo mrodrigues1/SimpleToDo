@@ -29,8 +29,9 @@ namespace SimpleToDo.Web
 
             services.AddTransient<IToDoListService, ToDoListService>();
             services.AddTransient<IToDoListRepository, ToDoListRepository>();
-
-            services.AddMemoryCache();
+            services.AddTransient<ITaskService, TaskService>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
+            
             services.AddSession();
             services.AddMvc();
         }
@@ -48,8 +49,7 @@ namespace SimpleToDo.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-            app.UseSession();
+            app.UseStaticFiles();            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
