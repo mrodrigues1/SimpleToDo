@@ -16,7 +16,8 @@ namespace SimpleToDo.Repository.UnitTest
 
             using (var context = new ToDoDbContext(dbOptions))
             {
-                context.Dispose
+                
+
             }
 
 
