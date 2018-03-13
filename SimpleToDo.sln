@@ -1,25 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Web.UnitTest", "SimpleToDo.UnitTest\SimpleToDo.Web.UnitTest.csproj", "{2224E62D-D088-49DA-B422-BCAB2C26737E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Service.UnitTest", "SimpleToDo.Service.UnitTest\SimpleToDo.Service.UnitTest.csproj", "{D581CBB0-B281-4A0D-8D68-9422BC152F74}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Repository.IntegrationTest", "SimpleToDo.Repository.UnitTest\SimpleToDo.Repository.IntegrationTest.csproj", "{FFC9AE62-171C-4593-9207-BD9A2BB38C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Repository.IntegrationTest", "SimpleToDo.Repository.IntegrationTest\SimpleToDo.Repository.IntegrationTest.csproj", "{FFC9AE62-171C-4593-9207-BD9A2BB38C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDo.Web", "SimpleToDo.Web\SimpleToDo.Web.csproj", "{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Web", "SimpleToDo.Web\SimpleToDo.Web.csproj", "{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E877A7C6-6361-4BC8-B360-2AC7688219B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDo.Model", "SimpleToDo.Model\SimpleToDo.Model.csproj", "{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Model", "SimpleToDo.Model\SimpleToDo.Model.csproj", "{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDo.Service", "SimpleToDo.Service\SimpleToDo.Service.csproj", "{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Service", "SimpleToDo.Service\SimpleToDo.Service.csproj", "{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDo.Repository", "SimpleToDo.Repository\SimpleToDo.Repository.csproj", "{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Repository", "SimpleToDo.Repository\SimpleToDo.Repository.csproj", "{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleToDo.Repository.UnitTest", "SimpleToDo.Repository.UnitTest\SimpleToDo.Repository.UnitTest.csproj", "{45B0B0C5-05E5-43AB-A39C-5EC8F70E125B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45B0B0C5-05E5-43AB-A39C-5EC8F70E125B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B0B0C5-05E5-43AB-A39C-5EC8F70E125B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B0B0C5-05E5-43AB-A39C-5EC8F70E125B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B0B0C5-05E5-43AB-A39C-5EC8F70E125B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
 		{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
 		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
+		{45B0B0C5-05E5-43AB-A39C-5EC8F70E125B} = {E877A7C6-6361-4BC8-B360-2AC7688219B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {054DB565-0C66-4BD1-99FD-527FCC7CA252}

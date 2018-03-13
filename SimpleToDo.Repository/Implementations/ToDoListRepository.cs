@@ -41,15 +41,15 @@ namespace SimpleToDo.Repository.Implementations
             return _context.SaveChangesAsync();
         }
 
-        public void RemoveToDoList(List list)
+        public async Task RemoveToDoList(List list)
         {
             _context.List.Remove(list);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public bool ToDoListExists(int id)
+        public Task<bool> ToDoListExists(int id)
         {
-            return _context.List.Any(e => e.ListId == id);
+            return _context.List.AnyAsync(e => e.ListId == id);
         }
     }
 }
