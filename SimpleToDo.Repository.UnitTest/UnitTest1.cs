@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
+using SimpleToDo.Repository.Implementations;
 using System;
 using Xunit;
 
@@ -10,17 +11,34 @@ namespace SimpleToDo.Repository.UnitTest
         [Fact]
         public void Test1()
         {
-            var dbOptions = new DbContextOptionsBuilder<ToDoDbContext>()
-                .UseInMemoryDatabase(databaseName: "ToDoDb")
-                .Options;
-
-            using (var context = new ToDoDbContext(dbOptions))
+            //Arrange            
+            var toDoListRepository = CreateToDoListRepository();
+            var newToDoList = new List
             {
-                
+                Name = "Unit Test"
+            };
+            
+            //Act
+            toDoListRepository.CreateToDoList(newToDoList);
 
-            }
+            //Assert
+            Assert.True(newToDoList.ListId != 0);
+        }
 
+        private ToDoListRepository CreateToDoListRepository()
+        {
+            var dbOptions = new DbContextOptionsBuilder<ToDoDbContext>()
+               .UseInMemoryDatabase(databaseName: "ToDoDb")
+               .Options;
 
+           var context = new ToDoDbContext(dbOptions);
+
+            return new ToDoListRepository(context);
+        }
+
+        private void DisposeContext(ToDoDbContext context)
+        {
+            context.Dispose();
         }
     }
 }
