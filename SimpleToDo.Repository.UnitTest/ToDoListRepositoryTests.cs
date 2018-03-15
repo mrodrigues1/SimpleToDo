@@ -6,26 +6,27 @@ using Xunit;
 
 namespace SimpleToDo.Repository.UnitTest
 {
-    public class UnitTest1
+    public class ToDoListRepositoryTests
     {
         [Fact]
-        public void Test1()
+        public void CreateToDoList_WithValidObject_NewListIdIsNotEqualsToZero()
         {
-            //Arrange            
-            var toDoListRepository = CreateToDoListRepository();
+            //Arrange                        
             var newToDoList = new List
             {
                 Name = "Unit Test"
             };
             
+            var sut = CreateSUT();
+            
             //Act
-            toDoListRepository.CreateToDoList(newToDoList);
+            sut.CreateToDoList(newToDoList);
 
             //Assert
             Assert.True(newToDoList.ListId != 0);
         }
 
-        private ToDoListRepository CreateToDoListRepository()
+        private ToDoListRepository CreateSUT()
         {
             var dbOptions = new DbContextOptionsBuilder<ToDoDbContext>()
                .UseInMemoryDatabase(databaseName: "ToDoDb")
@@ -34,11 +35,6 @@ namespace SimpleToDo.Repository.UnitTest
            var context = new ToDoDbContext(dbOptions);
 
             return new ToDoListRepository(context);
-        }
-
-        private void DisposeContext(ToDoDbContext context)
-        {
-            context.Dispose();
-        }
+        }        
     }
 }
