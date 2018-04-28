@@ -11,7 +11,7 @@ namespace SimpleToDo.Repository.Contracts
         Task<List> GetToDoListById(int id);
         Task CreateToDoList(List list);
         Task UpdateToDoList(List list);
-        void RemoveToDoList(List list);
-        bool ToDoListExists(int id);
+        Task RemoveToDoList(List list);
+        Task<bool> ToDoListExists(int id);
     }
 }

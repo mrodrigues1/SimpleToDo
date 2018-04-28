@@ -51,8 +51,7 @@ namespace SimpleToDo.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-            app.UseSession();
+            app.UseStaticFiles();            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

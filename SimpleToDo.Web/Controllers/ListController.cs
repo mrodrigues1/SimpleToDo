@@ -102,7 +102,9 @@ namespace SimpleToDo.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_toDoListService.ToDoListExists(id))
+                    bool todoExists = await _toDoListService.ToDoListExists(id);
+
+                    if (!todoExists)
                     {
                         return NotFound();
                     }
@@ -141,7 +143,7 @@ namespace SimpleToDo.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string listName = _toDoListService.RemoveToDoList(id);
+            string listName = await _toDoListService.RemoveToDoList(id);
 
             this.AddAlertSuccess($"{listName} removed successfully.");
 

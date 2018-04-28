@@ -37,16 +37,16 @@ namespace SimpleToDo.Service.Implementations
             return _toDoListRepository.UpdateToDoList(list);
         }
 
-        public string RemoveToDoList(int id)
+        public async Task<string> RemoveToDoList(int id)
         {
-            var list = this.GetToDoListById(id).Result;
+            var list = await this.GetToDoListById(id);
 
-            _toDoListRepository.RemoveToDoList(list);
+            await _toDoListRepository.RemoveToDoList(list);
 
             return list.Name;
         }
 
-        public bool ToDoListExists(int id)
+        public Task<bool> ToDoListExists(int id)
         {
             return _toDoListRepository.ToDoListExists(id);
         }

@@ -44,7 +44,6 @@ namespace SimpleToDo.Model.Extensions
             controller.TempData[AlertKey] = JsonConvert.SerializeObject(alerts);
         }
 
-
         private static ICollection<Alert> GetAlerts(Controller controller)
         {
             if (controller.TempData[AlertKey] == null)

@@ -11,7 +11,7 @@ namespace SimpleToDo.Service.Contracts
         Task<List> GetToDoListById(int id);
         Task CreateToDoList(List list);
         Task UpdateToDoList(List list);
-        string RemoveToDoList(int id);
-        bool ToDoListExists(int id);
+        Task<string> RemoveToDoList(int id);
+        Task<bool> ToDoListExists(int id);
     }
 }
