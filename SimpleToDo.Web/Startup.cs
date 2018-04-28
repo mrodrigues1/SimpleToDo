@@ -28,7 +28,10 @@ namespace SimpleToDo.Web
                     options.UseSqlServer(Configuration.GetConnectionString("SimpleToDo")));
 
             services.AddTransient<IToDoListService, ToDoListService>();
+            services.AddTransient<ITaskService, TaskService>();
+
             services.AddTransient<IToDoListRepository, ToDoListRepository>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
 
             services.AddMemoryCache();
             services.AddSession();
