@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
 using SimpleToDo.Repository.Implementations;
-using System;
 using Xunit;
 
 namespace SimpleToDo.Repository.UnitTest
@@ -16,9 +15,9 @@ namespace SimpleToDo.Repository.UnitTest
             {
                 Name = "Unit Test"
             };
-            
+
             var sut = CreateSUT();
-            
+
             //Act
             sut.CreateToDoList(newToDoList);
 
@@ -29,12 +28,12 @@ namespace SimpleToDo.Repository.UnitTest
         private ToDoListRepository CreateSUT()
         {
             var dbOptions = new DbContextOptionsBuilder<ToDoDbContext>()
-               .UseInMemoryDatabase(databaseName: "ToDoDb")
-               .Options;
+                .UseInMemoryDatabase(databaseName: "ToDoDb")
+                .Options;
 
-           var context = new ToDoDbContext(dbOptions);
+            var context = new ToDoDbContext(dbOptions);
 
             return new ToDoListRepository(context);
-        }        
+        }
     }
 }
