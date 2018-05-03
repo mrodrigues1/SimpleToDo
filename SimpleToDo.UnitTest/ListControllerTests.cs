@@ -223,5 +223,49 @@ namespace SimpleToDo.Web.UnitTest
                 .Should()
                 .Be(toDoList);
         }
+
+        [Fact]
+        public void Edit_ToDoListExists_ReturnEditViewName()
+        {
+            //Arrange
+            var toDoListId = 1;
+            var toDoList = CreateToDoListDefault();
+            var listServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => listServiceFake.GetToDoListById(A<int>.Ignored))
+                .Returns(toDoList);
+
+            var sut = CreateSut(listServiceFake);
+
+            //Act
+            var result = sut.Edit(toDoListId).Result;
+
+            //Assert
+            result
+                .Should()
+                .BeViewResult()
+                .WithViewName("Edit");
+        }
+
+        [Fact]
+        public void DeleteConfirm_ValidToDoListId_RedirectToIndexView()
+        {
+            //Arrange
+            var toDoListId = 1;
+            var toDoName = "ToDo List Unit Test";
+            var listServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => listServiceFake.RemoveToDoList(A<int>.Ignored))
+                .Returns(toDoName);
+
+            var sut = CreateSut(listServiceFake);
+
+            //Act
+            var result = sut.DeleteConfirmed(toDoListId).Result;
+
+            //Assert
+            result
+                .Should()
+                .BeRedirectResult();
+        }
+
     }
 }

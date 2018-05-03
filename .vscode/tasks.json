@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/SimpleToDo.Web/SimpleToDo.Web.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },                    
+        {
+            "label": "test-web-unit-test",
+            "command": "dotnet",
+            "type": "shell",
+            "group": "test",
+            "args": [
+                "test",
+                "${workspaceFolder}/SimpleToDo.UnitTest/SimpleToDo.Web.UnitTest.csproj"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

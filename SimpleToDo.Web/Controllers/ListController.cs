@@ -79,7 +79,7 @@ namespace SimpleToDo.Web.Controllers
             {
                 return NotFound();
             }
-            return View(list);
+            return View("Edit", list);
         }
 
         // POST: List/Edit/5
