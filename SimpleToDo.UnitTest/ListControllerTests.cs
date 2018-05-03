@@ -220,8 +220,8 @@ namespace SimpleToDo.Web.UnitTest
                 .Should()
                 .BeViewResult()
                 .Model
-                .Should().
-                Be(toDoList);
+                .Should()
+                .Be(toDoList);
         }
     }
 }
