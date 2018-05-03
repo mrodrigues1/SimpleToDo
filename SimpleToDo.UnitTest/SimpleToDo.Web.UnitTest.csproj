@@ -7,9 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="4.5.1" />
+    <PackageReference Include="FluentAssertions.AspNetCore.Mvc" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
     <PackageReference Include="xunit" Version="2.4.0-beta.1.build3958" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.1.build3958" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleToDo.Service\SimpleToDo.Service.csproj" />
+    <ProjectReference Include="..\SimpleToDo.Web\SimpleToDo.Web.csproj" />
   </ItemGroup>
 
 </Project>

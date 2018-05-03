@@ -52,18 +52,18 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ListId,Name")] List list)
+        public async Task<IActionResult> Create([Bind("ListId,Name")] List toDoList)
         {
             if (ModelState.IsValid)
             {
-                await _toDoListService.CreateToDoList(list);
+                await _toDoListService.CreateToDoList(toDoList);
 
-                this.AddAlertSuccess($"{list.Name} created successfully.");
+                this.AddAlertSuccess($"{toDoList.Name} created successfully.");
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(list);
+            return View(toDoList);
         }
 
         // GET: List/Edit/5
@@ -87,9 +87,9 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ListId,Name")] List list)
+        public async Task<IActionResult> Edit(int id, [Bind("ListId,Name")] List toDoList)
         {
-            if (id != list.ListId)
+            if (id != toDoList.ListId)
             {
                 return NotFound();
             }
@@ -98,7 +98,7 @@ namespace SimpleToDo.Web.Controllers
             {
                 try
                 {
-                    await _toDoListService.UpdateToDoList(list);
+                    await _toDoListService.UpdateToDoList(toDoList);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -114,10 +114,10 @@ namespace SimpleToDo.Web.Controllers
                     }
                 }
 
-                this.AddAlertSuccess($"{list.Name} updated successfully.");
+                this.AddAlertSuccess($"{toDoList.Name} updated successfully.");
                 return RedirectToAction(nameof(Index));
             }
-            return View(list);
+            return View(toDoList);
         }
 
         // GET: List/Delete/5
