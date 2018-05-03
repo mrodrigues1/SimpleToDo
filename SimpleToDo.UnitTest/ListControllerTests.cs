@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FakeItEasy;
 using FluentAssertions;
 using FluentAssertions.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
 using SimpleToDo.Model.Entities;
 using SimpleToDo.Service.Contracts;
 using SimpleToDo.Web.Controllers;
@@ -265,6 +268,33 @@ namespace SimpleToDo.Web.UnitTest
             result
                 .Should()
                 .BeRedirectResult();
+        }
+
+        [Fact]
+        public void EditPost_ConcurrencyInUpdateAndToDoNotExists_ThrowsDbUpdateConcurrencyException()
+        {
+            //Arrange
+            var toDoListId = 1;
+            var toDoList = CreateToDoListDefault();
+            var listServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => listServiceFake.UpdateToDoList(A<List>.Ignored))
+                .ThrowsAsync(
+                    new DbUpdateConcurrencyException(
+                        "Update concurrency exception"
+                        , new List<IUpdateEntry>{}));
+
+            A.CallTo(() => listServiceFake.ToDoListExists(A<int>.Ignored))
+                .Returns(false);
+
+            var sut = CreateSut(listServiceFake);
+
+            //Act
+            Action action = async () => { await sut.Edit(toDoListId, toDoList); };
+
+            //Assert
+            action
+                .Should()
+                .Throw<DbUpdateConcurrencyException>();
         }
 
     }
