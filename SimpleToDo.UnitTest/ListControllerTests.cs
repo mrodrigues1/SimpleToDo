@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
-using FluentAssertions.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using SimpleToDo.Model.Entities;
@@ -31,7 +33,7 @@ namespace SimpleToDo.Web.UnitTest
             //Assert
             result
                 .Should()
-                .BeViewResult();
+                .BeOfType<ViewResult>();
         }
 
         private ListController CreateSut(IToDoListService listServiceFake)
@@ -54,8 +56,7 @@ namespace SimpleToDo.Web.UnitTest
 
             //Assert
             result
-                .Should()
-                .BeViewResult()
+                .As<ViewResult>()
                 .Model
                 .Should()
                 .BeOfType<List<List>>();
@@ -76,30 +77,11 @@ namespace SimpleToDo.Web.UnitTest
 
             //Assert
             result
+                .As<ViewResult>()
+                .ViewName
                 .Should()
-                .BeViewResult()
-                .WithDefaultViewName();
+                .BeNull();
         }
-
-        //[Fact]
-        //public void Index_ReturnViewWithNameIndex()
-        //{
-        //    //Arrange
-        //    var listServiceFake = A.Fake<IToDoListService>();
-        //    A.CallTo(() => listServiceFake.GetToDoLists())
-        //        .Returns(new List<List>());
-
-        //    var sut = CreateSut(listServiceFake);
-
-        //    //Act
-        //    var result = sut.Index().Result;
-
-        //    //Assert
-        //    result
-        //        .Should()
-        //        .BeViewResult()
-        //        .WithViewName("Index");
-        //}
 
         [Fact]
         public void Index_ReturnOneToDoList()
@@ -121,9 +103,9 @@ namespace SimpleToDo.Web.UnitTest
 
             //Assert
             result
-                .Should()
-                .BeViewResult()
-                .ModelAs<List<List>>()
+                .As<ViewResult>()
+                .Model
+                .As<List<List>>()
                 .Should()
                 .HaveCount(1);
         }
@@ -196,8 +178,7 @@ namespace SimpleToDo.Web.UnitTest
 
             //Assert
             result
-                .Should()
-                .BeViewResult()
+                .As<ViewResult>()
                 .Model
                 .Should()
                 .BeOfType<List>();
@@ -220,8 +201,7 @@ namespace SimpleToDo.Web.UnitTest
 
             //Assert
             result
-                .Should()
-                .BeViewResult()
+                .As<ViewResult>()
                 .Model
                 .Should()
                 .Be(toDoList);
@@ -244,9 +224,10 @@ namespace SimpleToDo.Web.UnitTest
 
             //Assert
             result
+                .As<ViewResult>()
+                .ViewName
                 .Should()
-                .BeViewResult()
-                .WithViewName("Edit");
+                .Be("Edit");
         }
 
         [Fact]
@@ -260,6 +241,7 @@ namespace SimpleToDo.Web.UnitTest
                 .Returns(toDoName);
 
             var sut = CreateSut(listServiceFake);
+            sut.TempData = new TempDataDictionary(A.Fake<HttpContext>(), A.Fake<ITempDataProvider>());
 
             //Act
             var result = sut.DeleteConfirmed(toDoListId).Result;
@@ -267,11 +249,11 @@ namespace SimpleToDo.Web.UnitTest
             //Assert
             result
                 .Should()
-                .BeRedirectResult();
+                .BeOfType<RedirectToActionResult>();
         }
 
         [Fact]
-        public void EditPost_ConcurrencyInUpdateAndToDoNotExists_ThrowsDbUpdateConcurrencyException()
+        public void EditPost_ConcurrencyInUpdateAndToDoListExists_ThrowsDbUpdateConcurrencyException()
         {
             //Arrange
             var toDoListId = 1;
@@ -280,22 +262,21 @@ namespace SimpleToDo.Web.UnitTest
             A.CallTo(() => listServiceFake.UpdateToDoList(A<List>.Ignored))
                 .ThrowsAsync(
                     new DbUpdateConcurrencyException(
-                        "Update concurrency exception"
-                        , new List<IUpdateEntry>{}));
+                        "Update concurrency exception",
+                        new List<IUpdateEntry> { A.Fake<IUpdateEntry>() }));
 
             A.CallTo(() => listServiceFake.ToDoListExists(A<int>.Ignored))
-                .Returns(false);
+                .Returns(true);
 
             var sut = CreateSut(listServiceFake);
 
             //Act
-            Action action = async () => { await sut.Edit(toDoListId, toDoList); };
+            Func<Task<IActionResult>> action = () => sut.Edit(toDoListId, toDoList);
 
             //Assert
             action
                 .Should()
                 .Throw<DbUpdateConcurrencyException>();
         }
-
     }
 }

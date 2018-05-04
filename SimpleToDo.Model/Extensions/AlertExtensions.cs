@@ -46,10 +46,12 @@ namespace SimpleToDo.Model.Extensions
 
         private static ICollection<Alert> GetAlerts(Controller controller)
         {
-            if (controller.TempData[AlertKey] == null)
-                controller.TempData[AlertKey] = JsonConvert.SerializeObject(new HashSet<Alert>());
+            var alertsTemp = controller.TempData[AlertKey];
 
-            ICollection<Alert> alerts = JsonConvert.DeserializeObject<ICollection<Alert>>(controller.TempData[AlertKey].ToString());
+            if (alertsTemp == null)
+                alertsTemp = JsonConvert.SerializeObject(new HashSet<Alert>());
+
+            ICollection<Alert> alerts = JsonConvert.DeserializeObject<ICollection<Alert>>(alertsTemp.ToString());
 
             if (alerts == null)
             {
