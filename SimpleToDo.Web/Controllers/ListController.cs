@@ -25,18 +25,14 @@ namespace SimpleToDo.Web.Controllers
         // GET: List/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
+            if (id == null)            
                 return NotFound();
-            }
+            
 
             var list = await _toDoListService.FindToDoListById(id.Value);
 
-
             if (list == null)
-            {
                 return NotFound();
-            }
 
             return View(list);
         }
@@ -69,16 +65,14 @@ namespace SimpleToDo.Web.Controllers
         // GET: List/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null)            
                 return NotFound();
-            }
-
+            
             var list = await _toDoListService.FindToDoListById(id.Value);
-            if (list == null)
-            {
+
+            if (list == null)            
                 return NotFound();
-            }
+            
             return View("Edit", list);
         }
 
@@ -89,11 +83,9 @@ namespace SimpleToDo.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ListId,Name")] List toDoList)
         {
-            if (id != toDoList.ListId)
-            {
+            if (id != toDoList.ListId)            
                 return NotFound();
-            }
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -123,18 +115,14 @@ namespace SimpleToDo.Web.Controllers
         // GET: List/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
+            if (id == null)            
                 return NotFound();
-            }
-
+            
             var list = await _toDoListService.FindToDoListById(id.Value);
 
-            if (list == null)
-            {
+            if (list == null)            
                 return NotFound();
-            }
-
+            
             return View(list);
         }
 

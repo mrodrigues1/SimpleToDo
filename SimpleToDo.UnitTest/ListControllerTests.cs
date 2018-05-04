@@ -278,5 +278,33 @@ namespace SimpleToDo.Web.UnitTest
                 .Should()
                 .Throw<DbUpdateConcurrencyException>();
         }
+
+        [Fact]
+        public void EditPost_InvalidModalState_ReturnSameModelToView()
+        {
+            //Arrange
+            var toDoListId = 1;
+            var toDoList = new List
+                {
+                    ListId = 1                    
+                };
+
+            var listServiceFake = A.Fake<IToDoListService>();                       
+
+            var sut = CreateSut(listServiceFake);
+
+            var modelStateErrorKey = "Name";
+            sut.ModelState.AddModelError(modelStateErrorKey, "Name is required.");
+
+            //Act
+            var result = sut.Edit(toDoListId, toDoList).Result;
+
+            //Assert
+            // result
+            //     .As<ViewResult>()
+            //     .ViewData
+            //     .ModelState[modelStateErrorKey]
+            //     .Errors                
+        }
     }
 }
