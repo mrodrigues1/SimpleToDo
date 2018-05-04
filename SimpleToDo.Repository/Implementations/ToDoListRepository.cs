@@ -16,12 +16,12 @@ namespace SimpleToDo.Repository.Implementations
             _context = context;
         }
 
-        public IQueryable<List> GetToDoLists()
+        public IQueryable<List> ToDoLists()
         {
             return _context.List;
         }
 
-        public Task<List> GetToDoListById(int id)
+        public Task<List> FindToDoListById(int id)
         {
             return _context
                 .List

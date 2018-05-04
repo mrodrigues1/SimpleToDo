@@ -22,7 +22,7 @@ namespace SimpleToDo.Web.UnitTest
         {
             //Arrange
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoLists())
+            A.CallTo(() => listServiceFake.ToDoLists())
                 .Returns(new List<List>());
 
             var sut = CreateSut(listServiceFake);
@@ -46,7 +46,7 @@ namespace SimpleToDo.Web.UnitTest
         {
             //Arrange
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoLists())
+            A.CallTo(() => listServiceFake.ToDoLists())
                 .Returns(new List<List>());
 
             var sut = CreateSut(listServiceFake);
@@ -67,7 +67,7 @@ namespace SimpleToDo.Web.UnitTest
         {
             //Arrange
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoLists())
+            A.CallTo(() => listServiceFake.ToDoLists())
                 .Returns(new List<List>());
 
             var sut = CreateSut(listServiceFake);
@@ -93,7 +93,7 @@ namespace SimpleToDo.Web.UnitTest
                 CreateToDoListDefault()
             };
 
-            A.CallTo(() => listServiceFake.GetToDoLists())
+            A.CallTo(() => listServiceFake.ToDoLists())
                 .Returns(toDoLists);
 
             var sut = CreateSut(listServiceFake);
@@ -145,7 +145,7 @@ namespace SimpleToDo.Web.UnitTest
             var toDoListId = 1;
             var notFoundStatusCode = 404;
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoListById(A<int>.Ignored))
+            A.CallTo(() => listServiceFake.FindToDoListById(A<int>.Ignored))
                 .Returns(System.Threading.Tasks.Task.FromResult((List)null));
 
             var sut = CreateSut(listServiceFake);
@@ -168,7 +168,7 @@ namespace SimpleToDo.Web.UnitTest
             var toDoListId = 1;
             var toDoList = CreateToDoListDefault();
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoListById(A<int>.Ignored))
+            A.CallTo(() => listServiceFake.FindToDoListById(A<int>.Ignored))
                 .Returns(toDoList);
 
             var sut = CreateSut(listServiceFake);
@@ -191,7 +191,7 @@ namespace SimpleToDo.Web.UnitTest
             var toDoListId = 1;
             var toDoList = CreateToDoListDefault();
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoListById(A<int>.Ignored))
+            A.CallTo(() => listServiceFake.FindToDoListById(A<int>.Ignored))
                 .Returns(toDoList);
 
             var sut = CreateSut(listServiceFake);
@@ -214,7 +214,7 @@ namespace SimpleToDo.Web.UnitTest
             var toDoListId = 1;
             var toDoList = CreateToDoListDefault();
             var listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.GetToDoListById(A<int>.Ignored))
+            A.CallTo(() => listServiceFake.FindToDoListById(A<int>.Ignored))
                 .Returns(toDoList);
 
             var sut = CreateSut(listServiceFake);

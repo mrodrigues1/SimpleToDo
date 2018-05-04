@@ -19,7 +19,7 @@ namespace SimpleToDo.Web.Controllers
         // GET: List
         public async Task<IActionResult> Index()
         {
-            return View(await _toDoListService.GetToDoLists());
+            return View(await _toDoListService.ToDoLists());
         }
 
         // GET: List/Details/5
@@ -30,7 +30,7 @@ namespace SimpleToDo.Web.Controllers
                 return NotFound();
             }
 
-            var list = await _toDoListService.GetToDoListById(id.Value);
+            var list = await _toDoListService.FindToDoListById(id.Value);
 
 
             if (list == null)
@@ -74,7 +74,7 @@ namespace SimpleToDo.Web.Controllers
                 return NotFound();
             }
 
-            var list = await _toDoListService.GetToDoListById(id.Value);
+            var list = await _toDoListService.FindToDoListById(id.Value);
             if (list == null)
             {
                 return NotFound();
@@ -128,7 +128,7 @@ namespace SimpleToDo.Web.Controllers
                 return NotFound();
             }
 
-            var list = await _toDoListService.GetToDoListById(id.Value);
+            var list = await _toDoListService.FindToDoListById(id.Value);
 
             if (list == null)
             {

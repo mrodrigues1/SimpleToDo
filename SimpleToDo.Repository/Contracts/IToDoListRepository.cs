@@ -7,8 +7,8 @@ namespace SimpleToDo.Repository.Contracts
 {
     public interface IToDoListRepository
     {
-        IQueryable<List> GetToDoLists();
-        Task<List> GetToDoListById(int id);
+        IQueryable<List> ToDoLists();
+        Task<List> FindToDoListById(int id);
         Task CreateToDoList(List list);
         Task UpdateToDoList(List list);
         Task RemoveToDoList(List list);
