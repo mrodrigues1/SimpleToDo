@@ -18,7 +18,7 @@ namespace SimpleToDo.Repository.Implementations
         public Task<Task> GetTaskById(int id)
         {
             return _context.Task
-            .Include(t => t.List)
+            .Include(t => t.ToDoList)
             .SingleOrDefaultAsync(m => m.TaskId == id);
         }
 

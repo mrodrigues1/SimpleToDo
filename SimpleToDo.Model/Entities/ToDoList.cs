@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SimpleToDo.Model.Entities
 {
-    public class List
+    public class ToDoList
     {
         public int ListId { get; set; }
 

@@ -25,14 +25,11 @@ namespace SimpleToDo.Web.Controllers
         // GET: List/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)            
-                return NotFound();
-            
+            if (id == null) return NotFound();
 
             var list = await _toDoListService.FindToDoListById(id.Value);
 
-            if (list == null)
-                return NotFound();
+            if (list == null) return NotFound();
 
             return View(list);
         }
@@ -48,31 +45,29 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ListId,Name")] List toDoList)
+        public async Task<IActionResult> Create([Bind("ListId,Name")] ToDoList toDoToDoList)
         {
             if (ModelState.IsValid)
             {
-                await _toDoListService.CreateToDoList(toDoList);
+                await _toDoListService.CreateToDoList(toDoToDoList);
 
-                this.AddAlertSuccess($"{toDoList.Name} created successfully.");
+                this.AddAlertSuccess($"{toDoToDoList.Name} created successfully.");
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(toDoList);
+            return View(toDoToDoList);
         }
 
         // GET: List/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)            
-                return NotFound();
-            
+            if (id == null) return NotFound();
+
             var list = await _toDoListService.FindToDoListById(id.Value);
 
-            if (list == null)            
-                return NotFound();
-            
+            if (list == null) return NotFound();
+
             return View("Edit", list);
         }
 
@@ -81,48 +76,40 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ListId,Name")] List toDoList)
+        public async Task<IActionResult> Edit(int id, [Bind("ListId,Name")] ToDoList toDoToDoList)
         {
-            if (id != toDoList.ListId)            
+            if (id != toDoToDoList.ListId)
                 return NotFound();
-            
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid) return View(toDoToDoList);
+
+            try
             {
-                try
-                {
-                    await _toDoListService.UpdateToDoList(toDoList);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    bool todoExists = await _toDoListService.ToDoListExists(id);
-
-                    if (!todoExists)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                this.AddAlertSuccess($"{toDoList.Name} updated successfully.");
-                return RedirectToAction(nameof(Index));
+                await _toDoListService.UpdateToDoList(toDoToDoList);
             }
-            return View(toDoList);
+            catch (DbUpdateConcurrencyException)
+            {
+                bool todoExists = await _toDoListService.ToDoListExists(id);
+
+                if (!todoExists)
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            this.AddAlertSuccess($"{toDoToDoList.Name} updated successfully.");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: List/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)            
-                return NotFound();
-            
+            if (id == null) return NotFound();
+
             var list = await _toDoListService.FindToDoListById(id.Value);
 
-            if (list == null)            
-                return NotFound();
-            
+            if (list == null) return NotFound();
+
             return View(list);
         }
 

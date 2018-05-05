@@ -7,10 +7,10 @@ namespace SimpleToDo.Service.Contracts
 {
     public interface IToDoListService
     {
-        Task<List<List>> ToDoLists();
-        Task<List> FindToDoListById(int id);
-        Task CreateToDoList(List list);
-        Task UpdateToDoList(List list);
+        Task<List<ToDoList>> ToDoLists();
+        Task<ToDoList> FindToDoListById(int id);
+        Task CreateToDoList(ToDoList toDoList);
+        Task UpdateToDoList(ToDoList toDoList);
         Task<string> RemoveToDoList(int id);
         Task<bool> ToDoListExists(int id);
     }

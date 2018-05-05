@@ -6,7 +6,7 @@ namespace SimpleToDo.Model.Entities
     {
         public ToDoDbContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<List> List { get; set; }
+        public DbSet<ToDoList> List { get; set; }
         public DbSet<Task> Task { get; set; }
     }
 }

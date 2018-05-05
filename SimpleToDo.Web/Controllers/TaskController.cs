@@ -24,17 +24,17 @@ namespace SimpleToDo.Web.Controllers
         // GET: Task
         public async Task<IActionResult> Index(int listId)
         {
-            List toDoList = await _toDoListService.FindToDoListById(listId);
+            ToDoList toDoToDoList = await _toDoListService.FindToDoListById(listId);
 
-            if (toDoList == null)
+            if (toDoToDoList == null)
                 return NotFound();
 
             var taskIndexViewModel = new TaskIndexViewModel
             {
                 ListId = listId,
-                ListName = toDoList.Name,
-                ToDoTasks = toDoList.Tasks.Where(t => t.Done == false).OrderByDescending(x => x.TaskId),
-                CompletedTasks = toDoList.Tasks.Where(t => t.Done).OrderByDescending(x => x.TaskId)
+                ListName = toDoToDoList.Name,
+                ToDoTasks = toDoToDoList.Tasks.Where(t => t.Done == false).OrderByDescending(x => x.TaskId),
+                CompletedTasks = toDoToDoList.Tasks.Where(t => t.Done).OrderByDescending(x => x.TaskId)
             };
 
             return base.View(taskIndexViewModel);

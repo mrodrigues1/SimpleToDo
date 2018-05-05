@@ -7,11 +7,11 @@ namespace SimpleToDo.Repository.Contracts
 {
     public interface IToDoListRepository
     {
-        IQueryable<List> ToDoLists();
-        Task<List> FindToDoListById(int id);
-        Task CreateToDoList(List list);
-        Task UpdateToDoList(List list);
-        Task RemoveToDoList(List list);
+        IQueryable<ToDoList> ToDoLists();
+        Task<ToDoList> FindToDoListById(int id);
+        Task CreateToDoList(ToDoList toDoList);
+        Task UpdateToDoList(ToDoList toDoList);
+        Task RemoveToDoList(ToDoList toDoList);
         Task<bool> ToDoListExists(int id);
     }
 }

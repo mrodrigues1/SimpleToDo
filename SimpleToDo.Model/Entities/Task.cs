@@ -16,6 +16,6 @@ namespace SimpleToDo.Model.Entities
 
         public bool Done { get; set; }
 
-        public virtual List List { get; set; }
+        public virtual ToDoList ToDoList { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace SimpleToDo.Repository.UnitTest
         public void CreateToDoList_WithValidObject_NewListIdIsNotEqualsToZero()
         {
             //Arrange                        
-            var newToDoList = new List
+            var newToDoList = new ToDoList
             {
                 Name = "Unit Test"
             };

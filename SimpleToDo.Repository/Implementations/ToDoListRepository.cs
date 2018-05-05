@@ -16,12 +16,12 @@ namespace SimpleToDo.Repository.Implementations
             _context = context;
         }
 
-        public IQueryable<List> ToDoLists()
+        public IQueryable<ToDoList> ToDoLists()
         {
             return _context.List;
         }
 
-        public Task<List> FindToDoListById(int id)
+        public Task<ToDoList> FindToDoListById(int id)
         {
             return _context
                 .List
@@ -29,21 +29,21 @@ namespace SimpleToDo.Repository.Implementations
                 .SingleOrDefaultAsync(m => m.ListId == id);
         }
 
-        public Task CreateToDoList(List list)
+        public Task CreateToDoList(ToDoList toDoList)
         {
-            _context.Add(list);
+            _context.Add(toDoList);
             return _context.SaveChangesAsync();
         }
 
-        public Task UpdateToDoList(List list)
+        public Task UpdateToDoList(ToDoList toDoList)
         {
-            _context.Update(list);
+            _context.Update(toDoList);
             return _context.SaveChangesAsync();
         }
 
-        public async Task RemoveToDoList(List list)
+        public async Task RemoveToDoList(ToDoList toDoList)
         {
-            _context.List.Remove(list);
+            _context.List.Remove(toDoList);
             await _context.SaveChangesAsync();
         }
 
