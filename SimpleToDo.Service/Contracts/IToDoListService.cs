@@ -9,9 +9,9 @@ namespace SimpleToDo.Service.Contracts
     {
         Task<List<ToDoList>> ToDoLists();
         Task<ToDoList> FindToDoListById(int id);
-        Task CreateToDoList(ToDoList toDoList);
-        Task UpdateToDoList(ToDoList toDoList);
-        Task<string> RemoveToDoList(int id);
-        Task<bool> ToDoListExists(int id);
+        Task Create(ToDoList toDoList);
+        Task Update(ToDoList toDoList);
+        Task<string> Remove(int id);
+        Task<bool> Exists(int id);
     }
 }

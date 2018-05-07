@@ -23,22 +23,22 @@ namespace SimpleToDo.Service.Implementations
         public Task<ToDoList> FindToDoListById(int id) =>
             _toDoListRepository.FindToDoListById(id);
 
-        public Task CreateToDoList(ToDoList toDoList) =>
-            _toDoListRepository.CreateToDoList(toDoList);
+        public Task Create(ToDoList toDoList) =>
+            _toDoListRepository.Create(toDoList);
 
-        public Task UpdateToDoList(ToDoList toDoList) =>
-            _toDoListRepository.UpdateToDoList(toDoList);
+        public Task Update(ToDoList toDoList) =>
+            _toDoListRepository.Update(toDoList);
 
-        public async Task<string> RemoveToDoList(int id)
+        public async Task<string> Remove(int id)
         {
             var list = await this.FindToDoListById(id);
 
-            await _toDoListRepository.RemoveToDoList(list);
+            await _toDoListRepository.Remove(list);
 
             return list.Name;
         }
 
-        public Task<bool> ToDoListExists(int id) =>
-            _toDoListRepository.ToDoListExists(id);
+        public Task<bool> Exists(int id) =>
+            _toDoListRepository.Exists(id);
     }
 }

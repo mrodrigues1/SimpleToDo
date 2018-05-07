@@ -26,25 +26,25 @@ namespace SimpleToDo.Repository.Implementations
                 .Include(x => x.Tasks)
                 .SingleOrDefaultAsync(m => m.ListId == id);
 
-        public Task CreateToDoList(ToDoList toDoList)
+        public Task Create(ToDoList toDoList)
         {
             _context.Add(toDoList);
             return _context.SaveChangesAsync();
         }
 
-        public Task UpdateToDoList(ToDoList toDoList)
+        public Task Update(ToDoList toDoList)
         {
             _context.Update(toDoList);
             return _context.SaveChangesAsync();
         }
 
-        public async Task RemoveToDoList(ToDoList toDoList)
+        public async Task Remove(ToDoList toDoList)
         {
             _context.List.Remove(toDoList);
             await _context.SaveChangesAsync();
         }
 
-        public Task<bool> ToDoListExists(int id) =>
+        public Task<bool> Exists(int id) =>
             _context.List.AnyAsync(e => e.ListId == id);
     }
 }

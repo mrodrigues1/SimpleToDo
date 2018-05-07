@@ -49,7 +49,7 @@ namespace SimpleToDo.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _toDoListService.CreateToDoList(toDoToDoList);
+                await _toDoListService.Create(toDoToDoList);
 
                 this.AddAlertSuccess($"{toDoToDoList.Name} created successfully.");
 
@@ -85,11 +85,11 @@ namespace SimpleToDo.Web.Controllers
 
             try
             {
-                await _toDoListService.UpdateToDoList(toDoToDoList);
+                await _toDoListService.Update(toDoToDoList);
             }
             catch (DbUpdateConcurrencyException)
             {
-                bool todoExists = await _toDoListService.ToDoListExists(id);
+                bool todoExists = await _toDoListService.Exists(id);
 
                 if (!todoExists)
                     return NotFound();
@@ -118,7 +118,7 @@ namespace SimpleToDo.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string listName = await _toDoListService.RemoveToDoList(id);
+            string listName = await _toDoListService.Remove(id);
 
             this.AddAlertSuccess($"{listName} removed successfully.");
 

@@ -9,9 +9,9 @@ namespace SimpleToDo.Repository.Contracts
     {
         IQueryable<ToDoList> ToDoLists();
         Task<ToDoList> FindToDoListById(int id);
-        Task CreateToDoList(ToDoList toDoList);
-        Task UpdateToDoList(ToDoList toDoList);
-        Task RemoveToDoList(ToDoList toDoList);
-        Task<bool> ToDoListExists(int id);
+        Task Create(ToDoList toDoList);
+        Task Update(ToDoList toDoList);
+        Task Remove(ToDoList toDoList);
+        Task<bool> Exists(int id);
     }
 }

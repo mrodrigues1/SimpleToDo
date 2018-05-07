@@ -237,7 +237,7 @@ namespace SimpleToDo.Web.UnitTest
             int toDoListId = 1;
             string toDoName = "ToDo List Unit Test";
             IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.RemoveToDoList(A<int>.Ignored))
+            A.CallTo(() => listServiceFake.Remove(A<int>.Ignored))
                 .Returns(toDoName);
 
             ListController sut = CreateSut(listServiceFake);
@@ -264,9 +264,9 @@ namespace SimpleToDo.Web.UnitTest
                     "Update concurrency exception",
                     new List<IUpdateEntry> { A.Fake<IUpdateEntry>() });
 
-            A.CallTo(() => listServiceFake.UpdateToDoList(A<ToDoList>.Ignored))
+            A.CallTo(() => listServiceFake.Update(A<ToDoList>.Ignored))
                 .ThrowsAsync(dbUpdateConcurrencyException);
-            A.CallTo(() => listServiceFake.ToDoListExists(A<int>.Ignored))
+            A.CallTo(() => listServiceFake.Exists(A<int>.Ignored))
                 .Returns(true);
 
             ListController sut = CreateSut(listServiceFake);
