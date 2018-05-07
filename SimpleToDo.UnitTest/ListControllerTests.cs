@@ -259,9 +259,10 @@ namespace SimpleToDo.Web.UnitTest
             const int toDoListId = 1;
             ToDoList toDoList = CreateToDoListDefault();
             IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            DbUpdateConcurrencyException dbUpdateConcurrencyException = new DbUpdateConcurrencyException(
-                "Update concurrency exception",
-                new List<IUpdateEntry> { A.Fake<IUpdateEntry>() });
+            DbUpdateConcurrencyException dbUpdateConcurrencyException = 
+                new DbUpdateConcurrencyException(
+                    "Update concurrency exception",
+                    new List<IUpdateEntry> { A.Fake<IUpdateEntry>() });
 
             A.CallTo(() => listServiceFake.UpdateToDoList(A<ToDoList>.Ignored))
                 .ThrowsAsync(dbUpdateConcurrencyException);
