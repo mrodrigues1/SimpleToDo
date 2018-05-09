@@ -24,7 +24,7 @@ namespace SimpleToDo.Web.Controllers
         // GET: Task
         public async Task<IActionResult> Index(int listId)
         {
-            ToDoList toDoToDoList = await _toDoListService.FindToDoListById(listId);
+            ToDoList toDoToDoList = await _toDoListService.FindById(listId);
 
             if (toDoToDoList == null)
                 return NotFound();

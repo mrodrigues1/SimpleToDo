@@ -7,11 +7,11 @@ using SimpleToDo.Service.Contracts;
 
 namespace SimpleToDo.Web.Controllers
 {
-    public class ListController : Controller
+    public class ToDoListController : Controller
     {
         private readonly IToDoListService _toDoListService;
 
-        public ListController(IToDoListService toDoListService)
+        public ToDoListController(IToDoListService toDoListService)
         {
             _toDoListService = toDoListService;
         }
@@ -27,7 +27,7 @@ namespace SimpleToDo.Web.Controllers
         {
             if (id == null) return NotFound();
 
-            var list = await _toDoListService.FindToDoListById(id.Value);
+            var list = await _toDoListService.FindById(id.Value);
 
             if (list == null) return NotFound();
 
@@ -45,7 +45,7 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ListId,Name")] ToDoList toDoToDoList)
+        public async Task<IActionResult> Create([Bind("Id,Name")] ToDoList toDoToDoList)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace SimpleToDo.Web.Controllers
         {
             if (id == null) return NotFound();
 
-            var list = await _toDoListService.FindToDoListById(id.Value);
+            var list = await _toDoListService.FindById(id.Value);
 
             if (list == null) return NotFound();
 
@@ -76,16 +76,16 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ListId,Name")] ToDoList toDoToDoList)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ToDoList toDoList)
         {
-            if (id != toDoToDoList.ListId)
+            if (id != toDoList.Id)
                 return NotFound();
 
-            if (!ModelState.IsValid) return View(toDoToDoList);
+            if (!ModelState.IsValid) return View(toDoList);
 
             try
             {
-                await _toDoListService.Update(toDoToDoList);
+                await _toDoListService.Update(toDoList);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -97,7 +97,7 @@ namespace SimpleToDo.Web.Controllers
                     throw;
             }
 
-            this.AddAlertSuccess($"{toDoToDoList.Name} updated successfully.");
+            this.AddAlertSuccess($"{toDoList.Name} updated successfully.");
             return RedirectToAction(nameof(Index));
         }
 
@@ -106,7 +106,7 @@ namespace SimpleToDo.Web.Controllers
         {
             if (id == null) return NotFound();
 
-            var list = await _toDoListService.FindToDoListById(id.Value);
+            var list = await _toDoListService.FindById(id.Value);
 
             if (list == null) return NotFound();
 

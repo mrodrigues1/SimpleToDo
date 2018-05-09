@@ -20,11 +20,11 @@ namespace SimpleToDo.Repository.Implementations
             _context.List;
 
 
-        public Task<ToDoList> FindToDoListById(int id) =>
+        public Task<ToDoList> FindById(int id) =>
             _context
                 .List
                 .Include(x => x.Tasks)
-                .SingleOrDefaultAsync(m => m.ListId == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
 
         public Task Create(ToDoList toDoList)
         {
@@ -45,6 +45,6 @@ namespace SimpleToDo.Repository.Implementations
         }
 
         public Task<bool> Exists(int id) =>
-            _context.List.AnyAsync(e => e.ListId == id);
+            _context.List.AnyAsync(e => e.Id == id);
     }
 }

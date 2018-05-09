@@ -20,12 +20,12 @@
         {
             <tr>
                 <td>
-                    <a asp-controller="Task" asp-action="Index" asp-route-listId="@item.ListId">@Html.DisplayFor(modelItem => item.Name)</a>                    
+                    <a asp-controller="Task" asp-action="Index" asp-route-listId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>                    
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ListId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ListId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ListId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

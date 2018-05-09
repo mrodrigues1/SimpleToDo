@@ -22,7 +22,7 @@ namespace SimpleToDo.Repository.UnitTest
             sut.Create(newToDoList);
 
             //Assert
-            Assert.True(newToDoList.ListId != 0);
+            Assert.True(newToDoList.Id != 0);
         }
 
         private ToDoListRepository CreateSUT()

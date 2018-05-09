@@ -20,8 +20,8 @@ namespace SimpleToDo.Service.Implementations
         public Task<List<ToDoList>> ToDoLists() =>
             _toDoListRepository.ToDoLists().ToListAsync();
 
-        public Task<ToDoList> FindToDoListById(int id) =>
-            _toDoListRepository.FindToDoListById(id);
+        public Task<ToDoList> FindById(int id) =>
+            _toDoListRepository.FindById(id);
 
         public Task Create(ToDoList toDoList) =>
             _toDoListRepository.Create(toDoList);
@@ -31,7 +31,7 @@ namespace SimpleToDo.Service.Implementations
 
         public async Task<string> Remove(int id)
         {
-            var list = await this.FindToDoListById(id);
+            var list = await this.FindById(id);
 
             await _toDoListRepository.Remove(list);
 
