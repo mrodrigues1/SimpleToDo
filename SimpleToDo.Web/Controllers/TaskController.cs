@@ -33,8 +33,8 @@ namespace SimpleToDo.Web.Controllers
             {
                 ListId = listId,
                 ListName = toDoToDoList.Name,
-                ToDoTasks = toDoToDoList.Tasks.Where(t => t.Done == false).OrderByDescending(x => x.TaskId),
-                CompletedTasks = toDoToDoList.Tasks.Where(t => t.Done).OrderByDescending(x => x.TaskId)
+                ToDoTasks = toDoToDoList.Tasks.Where(t => t.Done == false).OrderByDescending(x => x.Id),
+                CompletedTasks = toDoToDoList.Tasks.Where(t => t.Done).OrderByDescending(x => x.Id)
             };
 
             return base.View(taskIndexViewModel);
@@ -68,7 +68,7 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TaskId,ListId,Name,Description,Done")] Task task)
+        public async Task<IActionResult> Create([Bind("Id,ToDoListId,Name,Description,Done")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -76,12 +76,12 @@ namespace SimpleToDo.Web.Controllers
 
                 this.AddAlertSuccess($"{task.Name} created successfully.");
 
-                return RedirectToAction(nameof(Index), new { listId = task.ListId });
+                return RedirectToAction(nameof(Index), new { listId = task.ToDoListId });
             }
 
             return View(new TaskCreateEditViewModel
             {
-                ListId = task.ListId,
+                ListId = task.ToDoListId,
                 Name = task.Name,
                 Description = task.Description
             });
@@ -94,15 +94,15 @@ namespace SimpleToDo.Web.Controllers
                 return NotFound();
 
             var task = await _taskService.GetTaskById(id.Value);
-            //_context.Task.SingleOrDefaultAsync(m => m.TaskId == id);
+            //_context.Task.SingleOrDefaultAsync(m => m.Id == id);
 
             if (task == null)
                 return NotFound();
 
             return View(new TaskCreateEditViewModel
             {
-                TaskId = task.TaskId,
-                ListId = task.ListId,
+                TaskId = task.Id,
+                ListId = task.ToDoListId,
                 Name = task.Name,
                 Description = task.Description,
                 Done = task.Done
@@ -114,9 +114,9 @@ namespace SimpleToDo.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TaskId,ListId,Name,Description,Done")] Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ToDoListId,Name,Description,Done")] Task task)
         {
-            if (id != task.TaskId)
+            if (id != task.Id)
                 return NotFound();
 
             if (ModelState.IsValid)
@@ -127,7 +127,7 @@ namespace SimpleToDo.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    var taskExists = await _taskService.TaskExists(task.TaskId);
+                    var taskExists = await _taskService.TaskExists(task.Id);
                     if (!taskExists)
                     {
                         return NotFound();
@@ -139,13 +139,13 @@ namespace SimpleToDo.Web.Controllers
                 }
 
                 this.AddAlertSuccess($"{task.Name} updated successfully.");
-                return RedirectToAction(nameof(Index), new { listId = task.ListId });
+                return RedirectToAction(nameof(Index), new { listId = task.ToDoListId });
             }
 
             return View(new TaskCreateEditViewModel
             {
-                TaskId = task.TaskId,
-                ListId = task.ListId,
+                TaskId = task.Id,
+                ListId = task.ToDoListId,
                 Name = task.Name,
                 Description = task.Description,
                 Done = task.Done
@@ -175,7 +175,7 @@ namespace SimpleToDo.Web.Controllers
            
             this.AddAlertSuccess($"{task.Name} removed successfully.");
 
-            return RedirectToAction(nameof(Index), new { listId = task.ListId });
+            return RedirectToAction(nameof(Index), new { listId = task.ToDoListId });
         }
 
 
@@ -185,7 +185,7 @@ namespace SimpleToDo.Web.Controllers
 
             this.AddAlertSuccess($"{task.Name} completed successfully.");
 
-            return RedirectToAction(nameof(Index), new { listId = task.ListId });
+            return RedirectToAction(nameof(Index), new { listId = task.ToDoListId });
         }
 
         public async Task<IActionResult> UndoTask(int id)
@@ -194,7 +194,7 @@ namespace SimpleToDo.Web.Controllers
 
             this.AddAlertSuccess($"{task.Name} undone successfully.");
 
-            return RedirectToAction(nameof(Index), new { listId = task.ListId });
+            return RedirectToAction(nameof(Index), new { listId = task.ToDoListId });
         }
     }
 }

@@ -29,10 +29,10 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="CompleteTask" asp-route-id="@item.TaskId">Complete</a> |
-                    <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                    <a asp-action="CompleteTask" asp-route-id="@item.Id">Complete</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
@@ -79,8 +79,8 @@
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
-                                    <a asp-action="UndoTask" asp-route-id="@item.TaskId">Undo</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                                    <a asp-action="UndoTask" asp-route-id="@item.Id">Undo</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                 </td>
                             </tr>
                         }

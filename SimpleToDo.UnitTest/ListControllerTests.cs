@@ -21,11 +21,11 @@ namespace SimpleToDo.Web.UnitTest
         public void Index_ReturnViewResult()
         {
             //Arrange
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.ToDoLists())
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.ToDoLists())
                 .Returns(new List<ToDoList>());
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Index().Result;
@@ -36,20 +36,20 @@ namespace SimpleToDo.Web.UnitTest
                 .BeOfType<ViewResult>();
         }
 
-        private ToDoListController CreateSut(IToDoListService listServiceFake)
+        private ToDoListController CreateSut(IToDoListService toDoListServiceFake)
         {
-            return new ToDoListController(listServiceFake);
+            return new ToDoListController(toDoListServiceFake);
         }
 
         [Fact]
         public void Index_ReturnTypeIsListOfToDoList()
         {
             //Arrange
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.ToDoLists())
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.ToDoLists())
                 .Returns(new List<ToDoList>());
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Index().Result;
@@ -66,11 +66,11 @@ namespace SimpleToDo.Web.UnitTest
         public void Index_ReturnDefaultViewName()
         {
             //Arrange
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.ToDoLists())
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.ToDoLists())
                 .Returns(new List<ToDoList>());
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Index().Result;
@@ -87,16 +87,16 @@ namespace SimpleToDo.Web.UnitTest
         public void Index_ReturnOneToDoList()
         {
             //Arrange
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
             List<ToDoList> toDoLists = new List<ToDoList>
             {
                 CreateToDoListDefault()
             };
 
-            A.CallTo(() => listServiceFake.ToDoLists())
+            A.CallTo(() => toDoListServiceFake.ToDoLists())
                 .Returns(toDoLists);
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Index().Result;
@@ -124,8 +124,8 @@ namespace SimpleToDo.Web.UnitTest
         {
             //Arrange
             int notFoundStatusCode = 404;
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            ToDoListController sut = CreateSut(listServiceFake);
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Details(null).Result;
@@ -144,11 +144,11 @@ namespace SimpleToDo.Web.UnitTest
             //Arrange
             int toDoListId = 1;
             int notFoundStatusCode = 404;
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.FindById(A<int>.Ignored))
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.FindById(A<int>.Ignored))
                 .Returns(System.Threading.Tasks.Task.FromResult((ToDoList)null));
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Edit(toDoListId).Result;
@@ -167,11 +167,11 @@ namespace SimpleToDo.Web.UnitTest
             //Arrange
             int toDoListId = 1;
             ToDoList toDoList = CreateToDoListDefault();
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.FindById(A<int>.Ignored))
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.FindById(A<int>.Ignored))
                 .Returns(toDoList);
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Edit(toDoListId).Result;
@@ -190,11 +190,11 @@ namespace SimpleToDo.Web.UnitTest
             //Arrange
             int toDoListId = 1;
             ToDoList toDoList = CreateToDoListDefault();
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.FindById(A<int>.Ignored))
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.FindById(A<int>.Ignored))
                 .Returns(toDoList);
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Edit(toDoListId).Result;
@@ -213,11 +213,11 @@ namespace SimpleToDo.Web.UnitTest
             //Arrange
             int toDoListId = 1;
             ToDoList toDoList = CreateToDoListDefault();
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.FindById(A<int>.Ignored))
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.FindById(A<int>.Ignored))
                 .Returns(toDoList);
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             IActionResult result = sut.Edit(toDoListId).Result;
@@ -236,11 +236,11 @@ namespace SimpleToDo.Web.UnitTest
             //Arrange
             int toDoListId = 1;
             string toDoName = "ToDo List Unit Test";
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
-            A.CallTo(() => listServiceFake.Remove(A<int>.Ignored))
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
+            A.CallTo(() => toDoListServiceFake.Remove(A<int>.Ignored))
                 .Returns(toDoName);
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
             sut.TempData = new TempDataDictionary(A.Fake<HttpContext>(), A.Fake<ITempDataProvider>());
 
             //Act
@@ -258,18 +258,18 @@ namespace SimpleToDo.Web.UnitTest
             //Arrange
             const int toDoListId = 1;
             ToDoList toDoList = CreateToDoListDefault();
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
             DbUpdateConcurrencyException dbUpdateConcurrencyException = 
                 new DbUpdateConcurrencyException(
                     "Update concurrency exception",
                     new List<IUpdateEntry> { A.Fake<IUpdateEntry>() });
 
-            A.CallTo(() => listServiceFake.Update(A<ToDoList>.Ignored))
+            A.CallTo(() => toDoListServiceFake.Update(A<ToDoList>.Ignored))
                 .ThrowsAsync(dbUpdateConcurrencyException);
-            A.CallTo(() => listServiceFake.Exists(A<int>.Ignored))
+            A.CallTo(() => toDoListServiceFake.Exists(A<int>.Ignored))
                 .Returns(true);
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             //Act
             Func<Task<IActionResult>> action = () => sut.Edit(toDoListId, toDoList);
@@ -290,9 +290,9 @@ namespace SimpleToDo.Web.UnitTest
                 Id = 1
             };
 
-            IToDoListService listServiceFake = A.Fake<IToDoListService>();
+            IToDoListService toDoListServiceFake = A.Fake<IToDoListService>();
 
-            ToDoListController sut = CreateSut(listServiceFake);
+            ToDoListController sut = CreateSut(toDoListServiceFake);
 
             string modelStateErrorKey = "Name";
             sut.ModelState.AddModelError(modelStateErrorKey, "Name is required.");

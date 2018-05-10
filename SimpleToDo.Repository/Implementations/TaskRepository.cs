@@ -19,7 +19,7 @@ namespace SimpleToDo.Repository.Implementations
         {
             return _context.Task
             .Include(t => t.ToDoList)
-            .SingleOrDefaultAsync(m => m.TaskId == id);
+            .SingleOrDefaultAsync(m => m.Id == id);
         }
 
         public System.Threading.Tasks.Task CreateTask(Task task)
@@ -36,7 +36,7 @@ namespace SimpleToDo.Repository.Implementations
 
         public Task<bool> TaskExists(int taskId)
         {
-            return _context.Task.AnyAsync(x => x.TaskId == taskId);
+            return _context.Task.AnyAsync(x => x.Id == taskId);
         }
 
         public System.Threading.Tasks.Task RemoveTask(Task task)

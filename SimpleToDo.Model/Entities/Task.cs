@@ -4,9 +4,9 @@ namespace SimpleToDo.Model.Entities
 {
     public class Task
     {
-        public int TaskId { get; set; }
+        public int Id { get; set; }
 
-        public int ListId { get; set; }
+        public int ToDoListId { get; set; }
 
         [Required, MaxLength(500)]
         public string Name { get; set; }
