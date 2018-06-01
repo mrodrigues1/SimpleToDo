@@ -56,7 +56,7 @@ namespace SimpleToDo.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=List}/{action=Index}/{id?}");
+                    template: "{controller=ToDoList}/{action=Index}/{id?}");
             });
         }
     }

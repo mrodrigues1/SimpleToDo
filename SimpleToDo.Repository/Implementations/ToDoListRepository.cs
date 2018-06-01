@@ -17,12 +17,12 @@ namespace SimpleToDo.Repository.Implementations
         }
 
         public IQueryable<ToDoList> ToDoLists() =>
-            _context.List;
+            _context.ToDoList;
 
 
         public Task<ToDoList> FindById(int id) =>
             _context
-                .List
+                .ToDoList
                 .Include(x => x.Tasks)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
@@ -40,11 +40,11 @@ namespace SimpleToDo.Repository.Implementations
 
         public async Task Remove(ToDoList toDoList)
         {
-            _context.List.Remove(toDoList);
+            _context.ToDoList.Remove(toDoList);
             await _context.SaveChangesAsync();
         }
 
         public Task<bool> Exists(int id) =>
-            _context.List.AnyAsync(e => e.Id == id);
+            _context.ToDoList.AnyAsync(e => e.Id == id);
     }
 }

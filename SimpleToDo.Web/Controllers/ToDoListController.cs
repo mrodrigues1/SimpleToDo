@@ -16,13 +16,13 @@ namespace SimpleToDo.Web.Controllers
             _toDoListService = toDoListService;
         }
 
-        // GET: List
+        // GET: ToDoList
         public async Task<IActionResult> Index()
         {
             return View(await _toDoListService.ToDoLists());
         }
 
-        // GET: List/Details/5
+        // GET: ToDoList/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -34,13 +34,13 @@ namespace SimpleToDo.Web.Controllers
             return View(list);
         }
 
-        // GET: List/Create
+        // GET: ToDoList/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: List/Create
+        // POST: ToDoList/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -59,7 +59,7 @@ namespace SimpleToDo.Web.Controllers
             return View(toDoToDoList);
         }
 
-        // GET: List/Edit/5
+        // GET: ToDoList/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -71,7 +71,7 @@ namespace SimpleToDo.Web.Controllers
             return View("Edit", list);
         }
 
-        // POST: List/Edit/5
+        // POST: ToDoList/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -101,7 +101,7 @@ namespace SimpleToDo.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: List/Delete/5
+        // GET: ToDoList/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -113,7 +113,7 @@ namespace SimpleToDo.Web.Controllers
             return View(list);
         }
 
-        // POST: List/Delete/5
+        // POST: ToDoList/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
