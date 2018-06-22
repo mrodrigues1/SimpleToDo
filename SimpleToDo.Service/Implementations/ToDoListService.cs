@@ -31,7 +31,7 @@ namespace SimpleToDo.Service.Implementations
 
         public async Task<string> Remove(int id)
         {
-            var list = await this.FindById(id);
+            var list = await FindById(id);
 
             await _toDoListRepository.Remove(list);
 

@@ -36,7 +36,7 @@ namespace SimpleToDo.Service.Implementations
 
         public async Task<Task> RemoveTask(int id)
         {
-            var task = await this.GetTaskById(id);
+            var task = await GetTaskById(id);
 
             await _taskRepository.RemoveTask(task);
 
@@ -45,22 +45,22 @@ namespace SimpleToDo.Service.Implementations
 
         public async Task<Task> CompleteTask(int id)
         {
-            var task = await this.GetTaskById(id);
+            var task = await GetTaskById(id);
 
             task.Done = true;
 
-            await this.UpdateTask(task);
+            await UpdateTask(task);
 
             return task;
         }
 
         public async Task<Task> UndoTask(int id)
         {
-            var task = await this.GetTaskById(id);
+            var task = await GetTaskById(id);
 
             task.Done = false;
 
-            await this.UpdateTask(task);
+            await UpdateTask(task);
 
             return task;
         }

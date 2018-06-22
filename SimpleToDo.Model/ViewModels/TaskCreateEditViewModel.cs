@@ -6,9 +6,9 @@ namespace SimpleToDo.Model.ViewModels
     public class TaskCreateEditViewModel
     {
         [HiddenInput]
-        public int ListId { get; set; }
+        public int TodoListId { get; set; }
 
-        public int TaskId { get; set; }
+        public int Id { get; set; }
 
         [Required, MaxLength(500)]
         public string Name { get; set; }

@@ -1,0 +1,99 @@
+﻿@model SimpleToDo.Model.ViewModels.TaskIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>@Model.ListName</h2>
+<p>
+    <a asp-action="Create" asp-route-listId="@Model.Id">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultTask.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultTask.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ToDoTasks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="CompleteTask" asp-route-id="@item.Id">Complete</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+        @if (!Model.ToDoTasks.Any())
+        {
+            <tr>
+                <td colspan="3">No Data Found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Show Completed Tasks</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DefaultTask.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DefaultTask.Description)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CompletedTasks)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    <a asp-action="UndoTask" asp-route-id="@item.Id">Undo</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (!Model.CompletedTasks.Any())
+                        {
+                            <tr>
+                                <td colspan="3">No Data Found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
