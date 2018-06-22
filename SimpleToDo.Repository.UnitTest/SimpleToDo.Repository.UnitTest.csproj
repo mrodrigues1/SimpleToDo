@@ -14,9 +14,4 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SimpleToDo.Model\SimpleToDo.Model.csproj" />
-    <ProjectReference Include="..\SimpleToDo.Repository\SimpleToDo.Repository.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -3,84 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Web.UnitTest", "SimpleToDo.UnitTest\SimpleToDo.Web.UnitTest.csproj", "{2224E62D-D088-49DA-B422-BCAB2C26737E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Service.UnitTest", "SimpleToDo.Service.UnitTest\SimpleToDo.Service.UnitTest.csproj", "{D581CBB0-B281-4A0D-8D68-9422BC152F74}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Repository.IntegrationTest", "SimpleToDo.Repository.IntegrationTest\SimpleToDo.Repository.IntegrationTest.csproj", "{FFC9AE62-171C-4593-9207-BD9A2BB38C17}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Web", "SimpleToDo.Web\SimpleToDo.Web.csproj", "{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E877A7C6-6361-4BC8-B360-2AC7688219B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Model", "SimpleToDo.Model\SimpleToDo.Model.csproj", "{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Service", "SimpleToDo.Service\SimpleToDo.Service.csproj", "{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Repository", "SimpleToDo.Repository\SimpleToDo.Repository.csproj", "{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Repository.UnitTest", "SimpleToDo.Repository.UnitTest\SimpleToDo.Repository.UnitTest.csproj", "{5C6F7AD5-D1AD-4658-A3A2-C999E0604DC7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleToDo.Web.IntegrationTest", "SimpleToDo.Web.IntegrationTest\SimpleToDo.Web.IntegrationTest.csproj", "{CB2355AA-AADA-4C0E-8B12-DF34CF902A84}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2224E62D-D088-49DA-B422-BCAB2C26737E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2224E62D-D088-49DA-B422-BCAB2C26737E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2224E62D-D088-49DA-B422-BCAB2C26737E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2224E62D-D088-49DA-B422-BCAB2C26737E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D581CBB0-B281-4A0D-8D68-9422BC152F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D581CBB0-B281-4A0D-8D68-9422BC152F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D581CBB0-B281-4A0D-8D68-9422BC152F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D581CBB0-B281-4A0D-8D68-9422BC152F74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFC9AE62-171C-4593-9207-BD9A2BB38C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FFC9AE62-171C-4593-9207-BD9A2BB38C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FFC9AE62-171C-4593-9207-BD9A2BB38C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FFC9AE62-171C-4593-9207-BD9A2BB38C17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AA149E8-B4BE-4D2D-87B5-798F958F7B29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C6F7AD5-D1AD-4658-A3A2-C999E0604DC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C6F7AD5-D1AD-4658-A3A2-C999E0604DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C6F7AD5-D1AD-4658-A3A2-C999E0604DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C6F7AD5-D1AD-4658-A3A2-C999E0604DC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB2355AA-AADA-4C0E-8B12-DF34CF902A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB2355AA-AADA-4C0E-8B12-DF34CF902A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB2355AA-AADA-4C0E-8B12-DF34CF902A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB2355AA-AADA-4C0E-8B12-DF34CF902A84}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{2224E62D-D088-49DA-B422-BCAB2C26737E} = {E877A7C6-6361-4BC8-B360-2AC7688219B1}
-		{D581CBB0-B281-4A0D-8D68-9422BC152F74} = {E877A7C6-6361-4BC8-B360-2AC7688219B1}
-		{FFC9AE62-171C-4593-9207-BD9A2BB38C17} = {E877A7C6-6361-4BC8-B360-2AC7688219B1}
-		{2AA149E8-B4BE-4D2D-87B5-798F958F7B29} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
-		{1FDD1905-7AC5-4CF0-937F-F914DDE75ED1} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
-		{1E5D0629-F69F-4DF3-BE52-3DAA9A7AC7ED} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
-		{DC55BF5F-A1CD-4551-A0CD-89E2C9CABFD9} = {55EE6CDA-C6F3-4701-B7BA-97DC65AD22B2}
-		{5C6F7AD5-D1AD-4658-A3A2-C999E0604DC7} = {E877A7C6-6361-4BC8-B360-2AC7688219B1}
-		{CB2355AA-AADA-4C0E-8B12-DF34CF902A84} = {E877A7C6-6361-4BC8-B360-2AC7688219B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {054DB565-0C66-4BD1-99FD-527FCC7CA252}

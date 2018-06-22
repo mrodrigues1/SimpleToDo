@@ -14,9 +14,4 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.1.build3958" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SimpleToDo.Service\SimpleToDo.Service.csproj" />
-    <ProjectReference Include="..\SimpleToDo.Web\SimpleToDo.Web.csproj" />
-  </ItemGroup>
-
 </Project>

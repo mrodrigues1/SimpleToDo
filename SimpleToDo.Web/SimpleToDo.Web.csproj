@@ -18,11 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleToDo.Model\SimpleToDo.Model.csproj" />
-    <ProjectReference Include="..\SimpleToDo.Service\SimpleToDo.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
