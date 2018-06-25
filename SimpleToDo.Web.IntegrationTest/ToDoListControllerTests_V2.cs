@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FluentAssertions;
@@ -10,7 +11,7 @@ using Task = System.Threading.Tasks.Task;
 namespace SimpleToDo.Web.IntegrationTest
 {
     public class ToDoListControllerTests_V2 : WebFixture<TestStartup>
-    {       
+    {
         [Fact]
         public async Task Index_ResponseReturnsSuccessStatusCode()
         {
@@ -21,8 +22,26 @@ namespace SimpleToDo.Web.IntegrationTest
 
             //Assert
             response.EnsureSuccessStatusCode();
-            response.Content.Should().BeOfType<List<ToDoList>>();
-            response.Content.Headers.ContentType.ToString().Should().Be("text/html; charset=utf-8");
+        }
+
+        [Fact]
+        public async Task Index_ReturnToDoListToView()
+        {
+            //Arrange
+            var ToDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(ToDoList);
+            await DbContext.SaveChangesAsync();
+
+            //Act
+            var response = await Client.GetAsync("/");
+
+            //Assert            
+            response
+                .Content
+                .Should()
+                .As<ToDoList>()
+                .Should()
+                .Be(ToDoList);
         }
 
         [Fact]
@@ -60,6 +79,146 @@ namespace SimpleToDo.Web.IntegrationTest
                 new FormUrlEncodedContent(formData));
 
             //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Headers.Location.OriginalString.Should().StartWith("/");
+        }
+
+        [Fact]
+        public async Task EditGet_IdEqualsOne_ReturnToDoListToView()
+        {
+            //Arrange
+            var ToDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(ToDoList);
+            await DbContext.SaveChangesAsync();
+
+            var formData = new Dictionary<string, string>
+            {
+                { "id", ToDoList.Id.ToString() }
+            };
+
+            //Act
+            var response = await Client.GetAsync($"/ToDoList/Edit/{ToDoList.Id}");
+
+            //Assert            
+            response
+                .Content
+                .Should()
+                .As<ToDoList>()
+                .Should()
+                .Be(ToDoList);
+        }
+
+        [Fact]
+        public async Task EditGet_IdEqualsNull_ReturnNotFoundHttpStatusCode()
+        {
+            //Arrange
+
+            //Act
+            var response = await Client.GetAsync("/ToDoList/Edit/");
+
+            //Assert            
+            response
+                .StatusCode
+                .Should()
+                .Be(HttpStatusCode.NotFound);
+        }        
+
+        [Fact]
+        public async Task EditPost_ValidIdAndToDoList_RedirectToIndexView()
+        {
+            //Arrange
+            var ToDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(ToDoList);
+            await DbContext.SaveChangesAsync();
+
+            var formData = new Dictionary<string, string>
+            {
+                { "id", ToDoList.Id.ToString() },
+                { "Id", ToDoList.Id.ToString() },
+                { "Name", "ToDoList Test 1" }
+            };
+
+            //Act
+            var response = await Client
+                .PostAsync(
+                    "/ToDoList/Edit/",
+                    new FormUrlEncodedContent(formData));
+
+            //Assert            
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Headers.Location.OriginalString.Should().StartWith("/");
+        }
+
+        [Fact]
+        public async Task EditPost_ModelStateInvalid_ReturnModelToEditView()
+        {
+            //Arrange
+            var ToDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(ToDoList);
+            await DbContext.SaveChangesAsync();
+
+            var formData = new Dictionary<string, string>
+            {
+                { "id", ToDoList.Id.ToString() },
+                { "Id", ToDoList.Id.ToString() }                
+            };
+
+            //Act
+            var response = await Client
+                .PostAsync(
+                    "/ToDoList/Edit/",
+                    new FormUrlEncodedContent(formData));
+
+            //Assert            
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Headers.Location.OriginalString.Should().StartWith("/");
+        }
+
+        [Fact]
+        public async Task EditGet_ThrowDbConcurrencyException()
+        {
+            //Arrange
+            var ToDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(ToDoList);
+            await DbContext.SaveChangesAsync();
+
+            var formData = new Dictionary<string, string>
+            {
+                { "id", ToDoList.Id.ToString() }
+            };
+
+            //Act
+            var response = await Client.GetAsync($"/ToDoList/Edit/{ToDoList.Id}");
+
+            //Assert            
+            response
+                .Content
+                .Should()
+                .As<ToDoList>()
+                .Should()
+                .Be(ToDoList);
+        }
+
+        [Fact]
+        public async Task DeleteConfirmed_ValidIdAndToDoList_RedirectToIndexView()
+        {
+            //Arrange
+            var ToDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(ToDoList);
+            await DbContext.SaveChangesAsync();
+
+            var formData = new Dictionary<string, string>
+            {
+                { "id", ToDoList.Id.ToString() }
+            };
+
+            //Act
+            var response = await Client
+                .PostAsync(
+                    "/ToDoList/DeleteConfirmed/",
+                    new FormUrlEncodedContent(formData));
+
+            //Assert            
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
             response.Headers.Location.OriginalString.Should().StartWith("/");
         }
