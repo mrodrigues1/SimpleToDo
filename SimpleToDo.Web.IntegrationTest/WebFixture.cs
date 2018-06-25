@@ -9,37 +9,37 @@ using Microsoft.EntityFrameworkCore.Storage;
 using SimpleToDo.Model.Entities;
 using SimpleToDo.Web;
 
-public class WebFixture<TStartup> : IDisposable where TStartup : class
+public class WebFixture<TStartup> : Fixture, IDisposable where TStartup : class
 {
     private readonly WebApplicationFactory<TStartup> _factory;
     private readonly IServiceProvider _services;
-    private readonly IDbContextTransaction _transaction;
 
     protected HttpClient Client;
     protected ToDoDbContext DbContext { get; }
+    protected IDbContextTransaction Transaction;
 
     public WebFixture()
-    {        
+    {
         _factory = new WebApplicationFactory<TStartup>();
-        Client = _factory.CreateClient(new WebApplicationFactoryClientOptions
-                {
-                    AllowAutoRedirect = false
-                });
-
         _services = _factory.Server.Host.Services;
 
+        Client = _factory
+            .CreateClient(new WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = false
+            });
         DbContext = GetService<ToDoDbContext>();
-        _transaction = DbContext.Database.BeginTransaction();
+        Transaction = DbContext.Database.BeginTransaction();
     }
 
     protected T GetService<T>() => (T)_services.GetService(typeof(T));
 
     public void Dispose()
     {
-        if (_transaction != null)
+        if (Transaction != null)
         {
-            _transaction.Rollback();
-            _transaction.Dispose();
+            Transaction.Rollback();
+            Transaction.Dispose();
         }
     }
 }

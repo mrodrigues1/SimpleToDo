@@ -9,23 +9,15 @@ using Task = System.Threading.Tasks.Task;
 
 namespace SimpleToDo.Web.IntegrationTest
 {
-    public class ToDoListControllerTests : IClassFixture<WebApplicationFactory<Startup>>
-    {
-        private readonly WebApplicationFactory<Startup> _factory;
-
-        public ToDoListControllerTests(WebApplicationFactory<Startup> factory)
-        {
-            _factory = factory;            
-        }
-
+    public class ToDoListControllerTests_V2 : WebFixture<TestStartup>
+    {       
         [Fact]
         public async Task Index_ResponseReturnsSuccessStatusCode()
         {
-            //Arrange 
-            var client = _factory.CreateClient();
+            //Arrange             
 
             //Act
-            var response = await client.GetAsync("/");
+            var response = await Client.GetAsync("/");
 
             //Assert
             response.EnsureSuccessStatusCode();
@@ -36,19 +28,14 @@ namespace SimpleToDo.Web.IntegrationTest
         [Fact]
         public async Task Create_ValidToDoList_RedirectToIndexAction_Error()
         {
-            //Arrange 
-            var client = _factory
-                .CreateClient(new WebApplicationFactoryClientOptions
-                {
-                    AllowAutoRedirect = false
-                });
+            //Arrange            
             var formData = new Dictionary<string, string>
             {
                 { nameof(ToDoList.Name), "To Do List 1" }
             };
 
             //Act
-            var response = await client.PostAsync(
+            var response = await Client.PostAsync(
                 "/ToDoList/Create",
                 new FormUrlEncodedContent(formData));
 
@@ -60,13 +47,7 @@ namespace SimpleToDo.Web.IntegrationTest
         [Fact]
         public async Task Create_ValidToDoList_RedirectToIndexAction()
         {
-            //Arrange 
-            var client = _factory
-                .CreateClient(new WebApplicationFactoryClientOptions
-                {
-                    AllowAutoRedirect = false
-                });
-
+            //Arrange            
             var formData = new Dictionary<string, string>
             {
                 { "__RequestVerificationToken",  await AntiForgeryHelper.ExtractAntiForgeryTokenAsync(client) },
@@ -74,7 +55,7 @@ namespace SimpleToDo.Web.IntegrationTest
             };
 
             //Act
-            var response = await client.PostAsync(
+            var response = await Client.PostAsync(
                 "/ToDoList/Create",
                 new FormUrlEncodedContent(formData));
 
