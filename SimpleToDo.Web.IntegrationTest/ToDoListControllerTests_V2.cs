@@ -50,7 +50,7 @@ namespace SimpleToDo.Web.IntegrationTest
             //Arrange            
             var formData = new Dictionary<string, string>
             {
-                { "__RequestVerificationToken",  await AntiForgeryHelper.ExtractAntiForgeryTokenAsync(client) },
+                { "__RequestVerificationToken",  await AntiForgeryHelper.ExtractAntiForgeryTokenAsync(Client) },
                 { nameof(ToDoList.Name), "To Do List 1" }
             };
 
