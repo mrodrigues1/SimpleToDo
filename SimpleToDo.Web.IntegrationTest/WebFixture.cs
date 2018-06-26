@@ -21,16 +21,17 @@ public class WebFixture<TStartup> : Fixture, IDisposable where TStartup : class
     public WebFixture()
     {
         _factory = new WebApplicationFactory<TStartup>();
+        _factory.ClientOptions.AllowAutoRedirect = false;
+        _factory.WithWebHostBuilder(ConfigureWebHostBuilder);
         _services = _factory.Server.Host.Services;
 
-        Client = _factory
-            .CreateClient(new WebApplicationFactoryClientOptions
-            {
-                AllowAutoRedirect = false
-            });
+        Client = _factory.CreateClient();
         DbContext = GetService<ToDoDbContext>();
         Transaction = DbContext.Database.BeginTransaction();
     }
+
+    private static void ConfigureWebHostBuilder(IWebHostBuilder builder) =>
+               builder.UseStartup<TStartup>();
 
     protected T GetService<T>() => (T)_services.GetService(typeof(T));
 

@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
 using Xunit;
 using Task = System.Threading.Tasks.Task;
@@ -37,12 +40,28 @@ namespace SimpleToDo.Web.IntegrationTest
 
             //Assert            
             response
-                .Content
-                .Should()
-                .As<ToDoList>()
-                .Should()
-                .Be(ToDoList);
+                 .Content
+                 .Should()
+                 .As<ToDoList>()
+                 .Should()
+                 .Be(ToDoList);
         }
+
+        [Fact]
+        public async Task Create_ReturnToDoListToView()
+        {
+            //Arrange            
+
+            //Act
+            var response = await Client.GetAsync("/ToDoList/Create");
+
+            //Assert 
+            response
+                .StatusCode
+                .Should()
+                .Be(HttpStatusCode.OK);
+        }
+
 
         [Fact]
         public async Task Create_ValidToDoList_RedirectToIndexAction_Error()
@@ -121,7 +140,7 @@ namespace SimpleToDo.Web.IntegrationTest
                 .StatusCode
                 .Should()
                 .Be(HttpStatusCode.NotFound);
-        }        
+        }
 
         [Fact]
         public async Task EditPost_ValidIdAndToDoList_RedirectToIndexView()
@@ -160,7 +179,7 @@ namespace SimpleToDo.Web.IntegrationTest
             var formData = new Dictionary<string, string>
             {
                 { "id", ToDoList.Id.ToString() },
-                { "Id", ToDoList.Id.ToString() }                
+                { "Id", ToDoList.Id.ToString() }
             };
 
             //Act
@@ -182,21 +201,26 @@ namespace SimpleToDo.Web.IntegrationTest
             await DbContext.ToDoList.AddAsync(ToDoList);
             await DbContext.SaveChangesAsync();
 
+            var ToDoListDb = await DbContext.ToDoList.FirstOrDefaultAsync(x => x.Id == ToDoList.Id);
+            ToDoListDb.Name = "Concurrency";
+
             var formData = new Dictionary<string, string>
             {
-                { "id", ToDoList.Id.ToString() }
+                { "id", ToDoList.Id.ToString() },
+                { "Id", ToDoList.Id.ToString() },
+                { "Name", "ToDoList Test 1" }
             };
 
             //Act
-            var response = await Client.GetAsync($"/ToDoList/Edit/{ToDoList.Id}");
+            Func<Task<HttpResponseMessage>> action = () => Client
+                .PostAsync(
+                    "/ToDoList/Edit/",
+                    new FormUrlEncodedContent(formData));
 
             //Assert            
-            response
-                .Content
+            action
                 .Should()
-                .As<ToDoList>()
-                .Should()
-                .Be(ToDoList);
+                .Throw<DbUpdateConcurrencyException>();
         }
 
         [Fact]

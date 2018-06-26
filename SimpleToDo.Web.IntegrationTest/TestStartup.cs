@@ -15,9 +15,11 @@ namespace SimpleToDo.Web.IntegrationTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            //services.AddEntityFrameworkInMemoryDatabase();
             services.AddDbContext<ToDoDbContext>(
-                options => 
+                options =>
                     options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SimpleToDo;Trusted_Connection=True;MultipleActiveResultSets=true"),
+                //options.UseInMemoryDatabase(databaseName: "SimpleToDoList"),
                 ServiceLifetime.Singleton
             );
 

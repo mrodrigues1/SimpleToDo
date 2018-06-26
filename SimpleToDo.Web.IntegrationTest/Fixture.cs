@@ -17,8 +17,9 @@ public class Fixture
     private static void CreateDatabase()
     {
         var options = new DbContextOptionsBuilder<ToDoDbContext>()
-        .UseSqlServer(Configuration["SimpleToDo"])
-        .Options;
+            .UseSqlServer(Configuration["SimpleToDo"])
+            //.UseInMemoryDatabase(databaseName: "SimpleToDoList")
+            .Options;
 
         new ToDoDbContext(options).Database.Migrate();
     }
