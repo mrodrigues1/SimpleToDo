@@ -8,7 +8,7 @@ namespace SimpleToDo.Web.IntegrationTest
     public static class AntiForgeryHelper
     {
         public static string ExtractAntiForgeryToken(string htmlResponseText)
-        {            
+        {
             if (htmlResponseText == null) throw new ArgumentException("htmlResponseText");
 
             Match match = Regex.Match(
@@ -21,7 +21,7 @@ namespace SimpleToDo.Web.IntegrationTest
         public static async Task<string> ExtractAntiForgeryTokenAsync(HttpClient client)
         {
             var response = await client.GetAsync("/");
-            var htmlResponseText = await response.Content.ReadAsStringAsync();            
+            var htmlResponseText = await response.Content.ReadAsStringAsync();
 
             return await Task.FromResult(ExtractAntiForgeryToken(htmlResponseText));
         }

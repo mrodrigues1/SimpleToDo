@@ -1,44 +1,41 @@
 using System;
 using System.Net.Http;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore.Storage;
 using SimpleToDo.Model.Entities;
-using SimpleToDo.Web;
 
-public class WebFixture<TStartup> : Fixture, IDisposable where TStartup : class
+namespace SimpleToDo.Web.IntegrationTest
 {
-    private readonly WebApplicationFactory<TStartup> _factory;
-    private readonly IServiceProvider _services;
-
-    protected HttpClient Client;
-    protected ToDoDbContext DbContext { get; }
-    protected IDbContextTransaction Transaction;
-
-    public WebFixture()
+    public class WebFixture<TStartup> : IDisposable where TStartup : class
     {
-        _factory = new WebApplicationFactory<TStartup>();
-        _factory.ClientOptions.AllowAutoRedirect = false;
-        _factory.WithWebHostBuilder(ConfigureWebHostBuilder);
-        _services = _factory.Server.Host.Services;
+        private readonly IServiceProvider _services;
+        private readonly IDbContextTransaction Transaction;
 
-        Client = _factory.CreateClient();
-        DbContext = GetService<ToDoDbContext>();
-        Transaction = DbContext.Database.BeginTransaction();
-    }
+        protected HttpClient Client;
+        private WebApplicationFactory<TStartup> _factory;
 
-    private static void ConfigureWebHostBuilder(IWebHostBuilder builder) =>
-               builder.UseStartup<TStartup>();
+        protected ToDoDbContext DbContext { get; }
 
-    protected T GetService<T>() => (T)_services.GetService(typeof(T));
-
-    public void Dispose()
-    {
-        if (Transaction != null)
+        public WebFixture()
         {
+            _factory = new WebApplicationFactory<TStartup>();
+            _factory.ClientOptions.AllowAutoRedirect = false;
+            _factory.WithWebHostBuilder(ConfigureWebHostBuilder);
+            _services = _factory.Server.Host.Services;
+
+            Client = _factory.CreateClient();
+            DbContext = GetService<ToDoDbContext>();
+            Transaction = DbContext.Database.BeginTransaction();
+        }
+        protected T GetService<T>() => (T)_services.GetService(typeof(T));
+
+        private static void ConfigureWebHostBuilder(IWebHostBuilder builder) =>
+                      builder.UseStartup<TStartup>();
+        public void Dispose()
+        {
+            if (Transaction == null) return;
+
             Transaction.Rollback();
             Transaction.Dispose();
         }
