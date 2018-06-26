@@ -15,8 +15,7 @@ namespace SimpleToDo.Web.IntegrationTest
 
         public ToDoListControllerTests(WebApplicationFactory<Startup> factory)
         {
-            _factory = factory;
-            _factory = new WebApplicationFactory<Startup>();
+            _factory = factory;            
         }
 
         [Fact]
