@@ -2,14 +2,17 @@ using System.Collections.Generic;
 using AutoFixture;
 using SimpleToDo.Model.Entities;
 
-public static class ToDoListFactory
+namespace SimpleToDo.Web.IntegrationTest
 {
-    private static AutoFixture.Fixture fixture = new AutoFixture.Fixture();
+    public static class ToDoListFactory
+    {
+        private static readonly AutoFixture.Fixture Fixture = new AutoFixture.Fixture();
 
-    public static IEnumerable<ToDoList> Create(int count = 1)
-        => fixture
-            .Build<ToDoList>()
-            .With(x => x.Id, 0)
-            .With(x => x.Tasks, new List<Task>())
-            .CreateMany<ToDoList>(count);
+        public static IEnumerable<ToDoList> Create(int count = 1)
+            => Fixture
+                .Build<ToDoList>()
+                .With(x => x.Id, 0)
+                .With(x => x.Tasks, new List<Task>())
+                .CreateMany<ToDoList>(count);
+    }
 }

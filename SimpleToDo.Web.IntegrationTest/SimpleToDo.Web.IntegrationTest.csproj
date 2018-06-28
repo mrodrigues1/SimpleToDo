@@ -22,5 +22,9 @@
     <ProjectReference Include="..\SimpleToDo.Model\SimpleToDo.Model.csproj" />
     <ProjectReference Include="..\SimpleToDo\SimpleToDo.Web.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>

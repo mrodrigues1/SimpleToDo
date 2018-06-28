@@ -13,8 +13,12 @@ using Task = System.Threading.Tasks.Task;
 
 namespace SimpleToDo.Web.IntegrationTest
 {
-    public class ToDoListControllerTests_V2 : WebFixture<TestStartup>
+    public class ToDoListControllerTests_V2 : FixtureWeb
     {
+        public ToDoListControllerTests_V2(WebApplicationFactory<Startup> fixture) : base(fixture)
+        {
+        }
+
         [Fact]
         public async Task Index_ResponseReturnsSuccessStatusCode()
         {
@@ -245,6 +249,6 @@ namespace SimpleToDo.Web.IntegrationTest
             //Assert            
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
             response.Headers.Location.OriginalString.Should().StartWith("/");
-        }
+        }        
     }
 }
