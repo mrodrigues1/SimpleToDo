@@ -11,7 +11,7 @@ using Xunit;
 
 namespace SimpleToDo.Web.IntegrationTest
 {
-    public class FixtureWeb : IDisposable, IClassFixture<WebApplicationFactory<Startup>>
+    public class FixtureWeb : IDisposable, IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly IServiceProvider _services;
 
@@ -30,17 +30,11 @@ namespace SimpleToDo.Web.IntegrationTest
 
             _services = factory.Server.Host.Services;
 
-            using (var scope = _services.CreateScope())
-            {
-                var scopedServices = scope.ServiceProvider;
+            DbContext = GetService<ToDoDbContext>();
 
-
-                DbContext = scopedServices.GetService<ToDoDbContext>();
-
-                DbContext.Database.EnsureCreated();
-                DbContext.Database.Migrate();
-                Transaction = DbContext.Database.BeginTransaction();
-            }
+            DbContext.Database.EnsureCreated();
+            DbContext.Database.Migrate();
+            Transaction = DbContext.Database.BeginTransaction();
         }
 
         private static void ConfigureWebHostBuilder(IWebHostBuilder builder) =>
