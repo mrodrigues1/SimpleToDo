@@ -21,7 +21,9 @@ namespace SimpleToDo.Web.IntegrationTest
 
         protected IDbContextTransaction Transaction;
 
-        public FixtureWeb(WebApplicationFactory<Startup> factory)
+        private IServiceScope _scope;
+
+        public FixtureWeb(CustomWebApplicationFactory<Startup> factory)
         {
             Client = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -30,15 +32,16 @@ namespace SimpleToDo.Web.IntegrationTest
 
             _services = factory.Server.Host.Services;
 
-            DbContext = GetService<ToDoDbContext>();
+            _scope = _services.CreateScope();
+
+            var scopedServices = _scope.ServiceProvider;
+            DbContext = scopedServices.GetRequiredService<ToDoDbContext>();
 
             DbContext.Database.EnsureCreated();
             DbContext.Database.Migrate();
+
             Transaction = DbContext.Database.BeginTransaction();
         }
-
-        private static void ConfigureWebHostBuilder(IWebHostBuilder builder) =>
-            builder.Build();
 
         protected T GetService<T>() => (T)_services.GetService(typeof(T));
 
@@ -48,6 +51,7 @@ namespace SimpleToDo.Web.IntegrationTest
 
             Transaction.Rollback();
             Transaction.Dispose();
+            _scope.Dispose();
         }
     }
 }

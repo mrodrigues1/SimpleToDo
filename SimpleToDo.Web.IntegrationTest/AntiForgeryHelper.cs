@@ -20,7 +20,7 @@ namespace SimpleToDo.Web.IntegrationTest
 
         public static async Task<string> ExtractAntiForgeryTokenAsync(HttpClient client)
         {
-            var response = await client.GetAsync("/");
+            var response = await client.GetAsync("/ToDoList/Create");
             var htmlResponseText = await response.Content.ReadAsStringAsync();
 
             return await Task.FromResult(ExtractAntiForgeryToken(htmlResponseText));

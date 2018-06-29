@@ -3,30 +3,34 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleToDo.Model.Entities;
-using SimpleToDo.Web;
 
-public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
+namespace SimpleToDo.Web.IntegrationTest
 {
-    protected ToDoDbContext DbContext;
-
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        builder.ConfigureServices(services =>
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            var serviceProvider = new ServiceCollection()
-                .AddEntityFrameworkSqlServer()
-                .BuildServiceProvider();
+            builder.ConfigureServices(services =>
+            {
+                var contextOptions = new DbContextOptionsBuilder()
+               .UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SimpleToDo;Trusted_Connection=True;MultipleActiveResultSets=true")
+               .Options;
 
-            services.AddDbContext<ToDoDbContext>(
-                options =>
-                {
-                    options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SimpleToDo;Trusted_Connection=True;MultipleActiveResultSets=true");
-                    options.UseInternalServiceProvider(serviceProvider);
-                },
-                ServiceLifetime.Singleton
-            );
 
-            DbContext = serviceProvider.GetService<ToDoDbContext>();
-        });
+                var serviceProvider = new ServiceCollection()
+                    .AddEntityFrameworkSqlServer()
+                    .BuildServiceProvider();
+
+                services.AddDbContext<ToDoDbContext>(
+                    options =>
+                    {
+                        options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SimpleToDo;Trusted_Connection=True;MultipleActiveResultSets=true");
+                        options.UseInternalServiceProvider(serviceProvider);
+                    },
+                    ServiceLifetime.Scoped,
+                    ServiceLifetime.Singleton
+                );
+            });
+        }
     }
 }

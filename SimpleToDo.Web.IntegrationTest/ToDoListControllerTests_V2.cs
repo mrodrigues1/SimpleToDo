@@ -15,7 +15,7 @@ namespace SimpleToDo.Web.IntegrationTest
 {
     public class ToDoListControllerTests_V2 : FixtureWeb
     {
-        public ToDoListControllerTests_V2(WebApplicationFactory<Startup> fixture) : base(fixture)
+        public ToDoListControllerTests_V2(CustomWebApplicationFactory<Startup> fixture) : base(fixture)
         {
         }
 
@@ -35,8 +35,8 @@ namespace SimpleToDo.Web.IntegrationTest
         public async Task Index_ReturnToDoListToView()
         {
             //Arrange
-            var ToDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(ToDoList);
+            var toDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(toDoList);
             await DbContext.SaveChangesAsync();
 
             //Act
@@ -46,9 +46,9 @@ namespace SimpleToDo.Web.IntegrationTest
             response
                  .Content
                  .Should()
-                 .As<ToDoList>()
+                 .As<List<ToDoList>>()
                  .Should()
-                 .Be(ToDoList);
+                 .Contain(toDoList);
         }
 
         [Fact]
@@ -110,17 +110,12 @@ namespace SimpleToDo.Web.IntegrationTest
         public async Task EditGet_IdEqualsOne_ReturnToDoListToView()
         {
             //Arrange
-            var ToDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(ToDoList);
+            var toDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(toDoList);
             await DbContext.SaveChangesAsync();
 
-            var formData = new Dictionary<string, string>
-            {
-                { "id", ToDoList.Id.ToString() }
-            };
-
             //Act
-            var response = await Client.GetAsync($"/ToDoList/Edit/{ToDoList.Id}");
+            var response = await Client.GetAsync($"/ToDoList/Edit/{toDoList.Id}");
 
             //Assert            
             response
@@ -128,7 +123,7 @@ namespace SimpleToDo.Web.IntegrationTest
                 .Should()
                 .As<ToDoList>()
                 .Should()
-                .Be(ToDoList);
+                .Be(toDoList);
         }
 
         [Fact]
@@ -150,14 +145,14 @@ namespace SimpleToDo.Web.IntegrationTest
         public async Task EditPost_ValidIdAndToDoList_RedirectToIndexView()
         {
             //Arrange
-            var ToDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(ToDoList);
+            var toDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(toDoList);
             await DbContext.SaveChangesAsync();
 
             var formData = new Dictionary<string, string>
             {
-                { "id", ToDoList.Id.ToString() },
-                { "Id", ToDoList.Id.ToString() },
+                { "id", toDoList.Id.ToString() },
+                { "Id", toDoList.Id.ToString() },
                 { "Name", "ToDoList Test 1" }
             };
 
@@ -176,14 +171,14 @@ namespace SimpleToDo.Web.IntegrationTest
         public async Task EditPost_ModelStateInvalid_ReturnModelToEditView()
         {
             //Arrange
-            var ToDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(ToDoList);
+            var toDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(toDoList);
             await DbContext.SaveChangesAsync();
 
             var formData = new Dictionary<string, string>
             {
-                { "id", ToDoList.Id.ToString() },
-                { "Id", ToDoList.Id.ToString() }
+                { "id", toDoList.Id.ToString() },
+                { "Id", toDoList.Id.ToString() }
             };
 
             //Act
@@ -201,17 +196,17 @@ namespace SimpleToDo.Web.IntegrationTest
         public async Task EditGet_ThrowDbConcurrencyException()
         {
             //Arrange
-            var ToDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(ToDoList);
+            var toDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(toDoList);
             await DbContext.SaveChangesAsync();
 
-            var ToDoListDb = await DbContext.ToDoList.FirstOrDefaultAsync(x => x.Id == ToDoList.Id);
-            ToDoListDb.Name = "Concurrency";
+            var toDoListDb = await DbContext.ToDoList.FirstOrDefaultAsync(x => x.Id == toDoList.Id);
+            toDoListDb.Name = "Concurrency";
 
             var formData = new Dictionary<string, string>
             {
-                { "id", ToDoList.Id.ToString() },
-                { "Id", ToDoList.Id.ToString() },
+                { "id", toDoList.Id.ToString() },
+                { "Id", toDoList.Id.ToString() },
                 { "Name", "ToDoList Test 1" }
             };
 
@@ -231,13 +226,13 @@ namespace SimpleToDo.Web.IntegrationTest
         public async Task DeleteConfirmed_ValidIdAndToDoList_RedirectToIndexView()
         {
             //Arrange
-            var ToDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(ToDoList);
+            var toDoList = ToDoListFactory.Create().Single();
+            await DbContext.ToDoList.AddAsync(toDoList);
             await DbContext.SaveChangesAsync();
 
             var formData = new Dictionary<string, string>
             {
-                { "id", ToDoList.Id.ToString() }
+                { "id", toDoList.Id.ToString() }
             };
 
             //Act
@@ -249,6 +244,6 @@ namespace SimpleToDo.Web.IntegrationTest
             //Assert            
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
             response.Headers.Location.OriginalString.Should().StartWith("/");
-        }        
+        }
     }
 }
