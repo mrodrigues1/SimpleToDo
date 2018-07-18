@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using AutoFixture;
 using SimpleToDo.Model.Entities;
 
-namespace SimpleToDo.Web.IntegrationTest
+namespace SimpleToDo.Web.IntegrationTest.Factory
 {
     public static class ToDoListFactory
     {

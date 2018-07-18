@@ -16,9 +16,7 @@ namespace SimpleToDo.Repository.Implementations
             _context = context;
         }
 
-        public IQueryable<ToDoList> ToDoLists() =>
-            _context.ToDoList;
-
+        public IQueryable<ToDoList> ToDoLists() => _context.ToDoList.AsNoTracking();
 
         public Task<ToDoList> FindById(int id) =>
             _context
@@ -44,7 +42,6 @@ namespace SimpleToDo.Repository.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public Task<bool> Exists(int id) =>
-            _context.ToDoList.AnyAsync(e => e.Id == id);
+        public Task<bool> Exists(int id) => _context.ToDoList.AnyAsync(e => e.Id == id);
     }
 }

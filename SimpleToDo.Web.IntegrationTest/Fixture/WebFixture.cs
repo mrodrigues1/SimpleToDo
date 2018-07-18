@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore.Storage;
 using SimpleToDo.Model.Entities;
 
@@ -20,32 +20,17 @@ namespace SimpleToDo.Web.IntegrationTest
 
         public WebFixture()
         {
-            var factory = new WebApplicationFactory<TStartup>
-            {
-                ClientOptions =
-                {
-                    AllowAutoRedirect = false
-                }
-            };
-            //factory.WithWebHostBuilder(ConfigureWebHostBuilder);
-
-            Client = factory.CreateClient();
-            _services = factory.Server.Host.Services;
-
-
+            var builder = WebHost.CreateDefaultBuilder()
+                .UseStartup<TStartup>();
+            var server = new TestServer(builder);
+            Client = server.CreateClient();
+            _services = server.Host.Services;
 
             DbContext = GetService<ToDoDbContext>();
             Transaction = DbContext.Database.BeginTransaction();
         }
 
-        protected T GetService<T>() => (T)_services.GetService(typeof(T));
-
-        private static void ConfigureWebHostBuilder(IWebHostBuilder builder) =>
-                      builder.UseStartup<TStartup>();
-
-        protected virtual IWebHostBuilder CreateWebHostBuilder() => 
-            WebHost.CreateDefaultBuilder()
-                .UseStartup<TStartup>();
+        protected T GetService<T>() => (T) _services.GetService(typeof(T));
 
         public void Dispose()
         {

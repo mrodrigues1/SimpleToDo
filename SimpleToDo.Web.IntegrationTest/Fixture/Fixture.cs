@@ -19,6 +19,7 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             var options = new DbContextOptionsBuilder<ToDoDbContext>()
                 .UseSqlServer(Configuration["DbConnection"])
+                .EnableSensitiveDataLogging()
                 //.UseInMemoryDatabase(databaseName: "SimpleToDoList")
                 .Options;
 

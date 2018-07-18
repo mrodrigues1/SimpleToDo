@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
@@ -89,7 +90,7 @@ namespace SimpleToDo.Web.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                bool todoExists = await _toDoListService.Exists(id);
+                var todoExists = await _toDoListService.Exists(id);
 
                 if (!todoExists)
                     return NotFound();
@@ -114,11 +115,12 @@ namespace SimpleToDo.Web.Controllers
         }
 
         // POST: ToDoList/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string listName = await _toDoListService.Remove(id);
+            var listName = await _toDoListService.Remove(id);
 
             this.AddAlertSuccess($"{listName} removed.");
 
