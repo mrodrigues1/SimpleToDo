@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SimpleToDo.Model.Entities;
 
-namespace SimpleToDo.Web.IntegrationTest
+namespace SimpleToDo.Web.IntegrationTest.Fixture
 {
     public class Fixture
     {

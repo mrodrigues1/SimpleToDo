@@ -8,6 +8,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
 using SimpleToDo.Web.IntegrationTest.Factory;
+using SimpleToDo.Web.IntegrationTest.Fixture;
 using SimpleToDo.Web.IntegrationTest.Helper;
 using SimpleToDo.Web.IntegrationTest.Stub;
 using Xunit;

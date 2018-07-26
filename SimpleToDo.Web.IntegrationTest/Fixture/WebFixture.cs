@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore.Storage;
 using SimpleToDo.Model.Entities;
 
-namespace SimpleToDo.Web.IntegrationTest
+namespace SimpleToDo.Web.IntegrationTest.Fixture
 {
     public class WebFixture<TStartup> : Fixture, IDisposable where TStartup : class
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleToDo.Model.Entities;
@@ -41,9 +40,7 @@ namespace SimpleToDo.Web.Controllers
             return View();
         }
 
-        // POST: ToDoList/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: ToDoList/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] ToDoList toDoToDoList)
@@ -72,9 +69,7 @@ namespace SimpleToDo.Web.Controllers
             return View("Edit", list);
         }
 
-        // POST: ToDoList/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: ToDoList/Edit/5        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ToDoList toDoList)
@@ -94,8 +89,8 @@ namespace SimpleToDo.Web.Controllers
 
                 if (!todoExists)
                     return NotFound();
-                else
-                    throw;
+
+                throw;
             }
 
             this.AddAlertSuccess($"{toDoList.Name} updated.");
