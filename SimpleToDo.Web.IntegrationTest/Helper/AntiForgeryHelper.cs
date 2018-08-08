@@ -19,6 +19,9 @@ namespace SimpleToDo.Web.IntegrationTest.Helper
 
         public static async Task<string> EnsureAntiforgeryTokenAsync(HttpClient client)
         {
+            if (_antiforgeryToken != null)
+                return _antiforgeryToken;
+
             var response = await client.GetAsync("/ToDoList/Create");
             response.EnsureSuccessStatusCode();
             if (response.Headers.TryGetValues("Set-Cookie", out IEnumerable<string> values))

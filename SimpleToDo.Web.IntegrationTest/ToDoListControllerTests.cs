@@ -16,19 +16,20 @@ using Task = System.Threading.Tasks.Task;
 
 namespace SimpleToDo.Web.IntegrationTest
 {
-    public class ToDoListControllerTests : WebFixture<StartupStub>
+    public class ToDoListControllerTests : IClassFixture<WebFixture<StartupStub>>
     {
+        private readonly WebFixture<StartupStub> _fixture;
+
+        public ToDoListControllerTests(WebFixture<StartupStub> fixture)
+        {
+            _fixture = fixture;
+        }
+
         [Fact]
         public async Task Index_GetAsyncCall_ResponseReturnsSuccessStatusCode()
-        {
-            //Arrange
-            var toDoList = ToDoListFactory.Create().Single();
-            toDoList.Name = "Integration Test";
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
-
+        {            
             //Act
-            var response = await Client.GetAsync("/");
+            var response = await _fixture.Client.GetAsync("/");
 
             //Assert
             response.EnsureSuccessStatusCode();
@@ -39,11 +40,11 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
+            await _fixture.DbContext.ToDoList.AddAsync(toDoList);
+            await _fixture.DbContext.SaveChangesAsync();
 
             //Act
-            var response = await Client.GetAsync("/");
+            var response = await _fixture.Client.GetAsync("/");
 
             //Assert 
             response
@@ -60,7 +61,7 @@ namespace SimpleToDo.Web.IntegrationTest
             //Arrange            
 
             //Act
-            var response = await Client.GetAsync("/ToDoList/Create");
+            var response = await _fixture.Client.GetAsync("/ToDoList/Create");
 
             //Assert 
             response
@@ -79,7 +80,7 @@ namespace SimpleToDo.Web.IntegrationTest
             };
 
             //Act
-            var response = await Client.PostAsync(
+            var response = await _fixture.Client.PostAsync(
                 "/ToDoList/Create",
                 new FormUrlEncodedContent(formData));
 
@@ -95,13 +96,13 @@ namespace SimpleToDo.Web.IntegrationTest
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(Client)
+                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
                 },
                 { nameof(ToDoList.Name), "To Do List 1" }
             };
 
             //Act
-            var response = await Client.PostAsync(
+            var response = await _fixture.Client.PostAsync(
                 "/ToDoList/Create",
                 new FormUrlEncodedContent(formData));
 
@@ -114,11 +115,11 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
+            await _fixture.DbContext.ToDoList.AddAsync(toDoList);
+            await _fixture.DbContext.SaveChangesAsync();
 
             //Act
-            var response = await Client.GetAsync($"/ToDoList/Edit/{toDoList.Id}");
+            var response = await _fixture.Client.GetAsync($"/ToDoList/Edit/{toDoList.Id}");
 
             //Assert            
             response
@@ -135,7 +136,7 @@ namespace SimpleToDo.Web.IntegrationTest
             //Arrange
 
             //Act
-            var response = await Client.GetAsync("/ToDoList/Edit/");
+            var response = await _fixture.Client.GetAsync("/ToDoList/Edit/");
 
             //Assert            
             response
@@ -149,14 +150,14 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
+            await _fixture.DbContext.ToDoList.AddAsync(toDoList);
+            await _fixture.DbContext.SaveChangesAsync();
 
             var formData = new Dictionary<string, string>
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(Client)
+                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() },
                 { "Id", toDoList.Id.ToString() },
@@ -164,7 +165,7 @@ namespace SimpleToDo.Web.IntegrationTest
             };
 
             //Act
-            var response = await Client
+            var response = await _fixture.Client
                 .PostAsync(
                     "/ToDoList/Edit/",
                     new FormUrlEncodedContent(formData));
@@ -178,21 +179,21 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
+            await _fixture.DbContext.ToDoList.AddAsync(toDoList);
+            await _fixture.DbContext.SaveChangesAsync();
 
             var formData = new Dictionary<string, string>
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(Client)
+                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() },
                 { "Id", toDoList.Id.ToString() }
             };
 
             //Act
-            var response = await Client
+            var response = await _fixture.Client
                 .PostAsync(
                     "/ToDoList/Edit/",
                     new FormUrlEncodedContent(formData));
@@ -211,17 +212,17 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
+            await _fixture.DbContext.ToDoList.AddAsync(toDoList);
+            await _fixture.DbContext.SaveChangesAsync();
 
-            var toDoListDb = await DbContext.ToDoList.FirstOrDefaultAsync(x => x.Id == toDoList.Id);
+            var toDoListDb = await _fixture.DbContext.ToDoList.FirstOrDefaultAsync(x => x.Id == toDoList.Id);
             toDoListDb.Name = "Concurrency";
 
             var formData = new Dictionary<string, string>
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(Client)
+                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() },
                 { "Id", toDoList.Id.ToString() },
@@ -229,7 +230,7 @@ namespace SimpleToDo.Web.IntegrationTest
             };
 
             //Act
-            Func<Task<HttpResponseMessage>> action = () => Client
+            Func<Task<HttpResponseMessage>> action = () => _fixture.Client
                 .PostAsync(
                     "/ToDoList/Edit/",
                     new FormUrlEncodedContent(formData));
@@ -245,20 +246,20 @@ namespace SimpleToDo.Web.IntegrationTest
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
-            await DbContext.ToDoList.AddAsync(toDoList);
-            await DbContext.SaveChangesAsync();
+            await _fixture.DbContext.ToDoList.AddAsync(toDoList);
+            await _fixture.DbContext.SaveChangesAsync();
 
             var formData = new Dictionary<string, string>
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(Client)
+                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() }
             };
 
             //Act
-            var response = await Client
+            var response = await _fixture.Client
                 .PostAsync(
                     $"/ToDoList/Delete/",
                     new FormUrlEncodedContent(formData));

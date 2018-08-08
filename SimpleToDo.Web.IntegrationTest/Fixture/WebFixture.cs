@@ -12,15 +12,15 @@ namespace SimpleToDo.Web.IntegrationTest.Fixture
     {
         private readonly IServiceProvider _services;
 
-        protected HttpClient Client;
+        public HttpClient Client;
 
-        protected ToDoDbContext DbContext { get; }
+        public ToDoDbContext DbContext { get; }
 
-        protected IDbContextTransaction Transaction;
+        public IDbContextTransaction Transaction;
 
         public WebFixture()
         {
-            var builder = WebHost.CreateDefaultBuilder()
+            IWebHostBuilder builder = WebHost.CreateDefaultBuilder()
                 .UseStartup<TStartup>();
             var server = new TestServer(builder);
             Client = server.CreateClient();

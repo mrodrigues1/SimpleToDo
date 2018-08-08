@@ -43,7 +43,7 @@ namespace SimpleToDo.Web
             services.AddTransient<ITaskRepository, TaskRepository>();
 
             services.AddMemoryCache();
-            services.AddSession();            
+            services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

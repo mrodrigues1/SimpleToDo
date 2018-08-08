@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleToDo.Model.Entities;
 using SimpleToDo.Repository.Contracts;
@@ -13,6 +14,13 @@ namespace SimpleToDo.Web.IntegrationTest.Stub
 {
     public class StartupStub
     {
+        static StartupStub()
+        {
+            Configuration = GetConfiguration();
+        }
+
+        protected static IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -22,13 +30,8 @@ namespace SimpleToDo.Web.IntegrationTest.Stub
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddDbContext<ToDoDbContext>(
-                options =>
-                {
-                    options.UseSqlServer(
-                        "Server=(localdb)\\MSSQLLocalDB;Database=SimpleToDo;Trusted_Connection=True;MultipleActiveResultSets=true");
-                },
+                options => options.UseSqlServer(Configuration["DbConnection"]),
                 ServiceLifetime.Singleton,
                 ServiceLifetime.Singleton);
 
@@ -56,6 +59,9 @@ namespace SimpleToDo.Web.IntegrationTest.Stub
                     template: "{controller=ToDoList}/{action=Index}/{id?}");
             });
         }
+
+        private static IConfiguration GetConfiguration()
+            => new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
     }
 
 }
