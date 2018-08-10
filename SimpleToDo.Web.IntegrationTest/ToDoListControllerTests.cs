@@ -36,7 +36,7 @@ namespace SimpleToDo.Web.IntegrationTest
         }
 
         [Fact]
-        public async Task Index_GetAsyncCall_ReturnCreatedToDoListToView()
+        public async Task Index_GetAsyncCall_ReturnNewToDoListToView()
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
