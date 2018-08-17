@@ -27,7 +27,7 @@ namespace SimpleToDo.Web.IntegrationTest
 
         [Fact]
         public async Task Index_GetAsyncCall_ResponseReturnsSuccessStatusCode()
-        {            
+        {
             //Act
             var response = await _fixture.Client.GetAsync("/");
 
@@ -96,7 +96,7 @@ namespace SimpleToDo.Web.IntegrationTest
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
+                    await AntiForgeryHelper.EnsureAntiForgeryTokenAsync(_fixture.Client)
                 },
                 { nameof(ToDoList.Name), "To Do List 1" }
             };
@@ -157,7 +157,7 @@ namespace SimpleToDo.Web.IntegrationTest
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
+                    await AntiForgeryHelper.EnsureAntiForgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() },
                 { "Id", toDoList.Id.ToString() },
@@ -186,7 +186,7 @@ namespace SimpleToDo.Web.IntegrationTest
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
+                    await AntiForgeryHelper.EnsureAntiForgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() },
                 { "Id", toDoList.Id.ToString() }
@@ -222,7 +222,7 @@ namespace SimpleToDo.Web.IntegrationTest
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
+                    await AntiForgeryHelper.EnsureAntiForgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() },
                 { "Id", toDoList.Id.ToString() },
@@ -253,7 +253,7 @@ namespace SimpleToDo.Web.IntegrationTest
             {
                 {
                     "__RequestVerificationToken",
-                    await AntiForgeryHelper.EnsureAntiforgeryTokenAsync(_fixture.Client)
+                    await AntiForgeryHelper.EnsureAntiForgeryTokenAsync(_fixture.Client)
                 },
                 { "id", toDoList.Id.ToString() }
             };

@@ -11,42 +11,63 @@ namespace SimpleToDo.Web.IntegrationTest.Helper
 {
     public static class AntiForgeryHelper
     {
-        private static SetCookieHeaderValue _antiforgeryCookie;
-        private static string _antiforgeryToken;
+        private static string _antiForgeryToken;
+        private static SetCookieHeaderValue _antiForgeryCookie;
 
-        public static Regex AntiforgeryFormFieldRegex = new Regex(
+        public static Regex AntiForgeryFormFieldRegex = new Regex(
             @"\<input name=""__RequestVerificationToken"" type=""hidden"" value=""([^""]+)"" \/\>");
 
-        public static async Task<string> EnsureAntiforgeryTokenAsync(HttpClient client)
+        public static async Task<string> EnsureAntiForgeryTokenAsync(HttpClient client)
         {
-            if (_antiforgeryToken != null)
-                return _antiforgeryToken;
+            if (_antiForgeryToken != null)
+                return _antiForgeryToken;
 
             var response = await client.GetAsync("/ToDoList/Create");
             response.EnsureSuccessStatusCode();
+
+            _antiForgeryCookie = TryGetAntiForgeryCookie(response);
+
+            Assert.NotNull(_antiForgeryCookie);
+
+            AddCookieToDefaultRequestHeader(client, _antiForgeryCookie);
+
+            _antiForgeryToken = await GetAntiForgeryToken(response);
+
+            Assert.NotNull(_antiForgeryToken);
+
+            return _antiForgeryToken;
+        }
+
+        private static SetCookieHeaderValue TryGetAntiForgeryCookie(HttpResponseMessage response)
+        {
             if (response.Headers.TryGetValues("Set-Cookie", out IEnumerable<string> values))
             {
-                _antiforgeryCookie = SetCookieHeaderValue.ParseList(values.ToList())
+                return SetCookieHeaderValue.ParseList(values.ToList())
                     .SingleOrDefault(
                         c => c.Name.StartsWith(
                             ".AspNetCore.AntiForgery.",
                             StringComparison.InvariantCultureIgnoreCase));
             }
 
-            Assert.NotNull(_antiforgeryCookie);
+            return null;
+        }
 
+        private static void AddCookieToDefaultRequestHeader(
+            HttpClient client,
+            SetCookieHeaderValue antiForgeryCookie)
+        {
             client.DefaultRequestHeaders.Add(
                 "Cookie",
-                new CookieHeaderValue(_antiforgeryCookie.Name, _antiforgeryCookie.Value)
+                new CookieHeaderValue(antiForgeryCookie.Name, antiForgeryCookie.Value)
                     .ToString());
+        }
 
+        private static async Task<string> GetAntiForgeryToken(HttpResponseMessage response)
+        {
             var responseHtml = await response.Content.ReadAsStringAsync();
-            var match = AntiforgeryFormFieldRegex.Match(responseHtml);
-            _antiforgeryToken = match.Success ? match.Groups[1].Captures[0].Value : null;
+            var match = AntiForgeryFormFieldRegex.Match(responseHtml);
 
-            Assert.NotNull(_antiforgeryToken);
-
-            return _antiforgeryToken;
+            return match.Success ? match.Groups[1].Captures[0].Value : null;
         }
     }
 }
