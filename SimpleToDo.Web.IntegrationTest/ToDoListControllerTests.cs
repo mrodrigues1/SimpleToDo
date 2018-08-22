@@ -133,12 +133,10 @@ namespace SimpleToDo.Web.IntegrationTest
         [Fact]
         public async Task Edit_GetAsyncCallWithNullId_ReturnNotFoundStatusCode()
         {
-            //Arrange
-
             //Act
             var response = await _fixture.Client.GetAsync("/ToDoList/Edit/");
 
-            //Assert            
+            //Assert        
             response
                 .StatusCode
                 .Should()
@@ -170,12 +168,12 @@ namespace SimpleToDo.Web.IntegrationTest
                     "/ToDoList/Edit/",
                     new FormUrlEncodedContent(formData));
 
-            //Assert                        
+            //Assert                     
             response.Headers.Location.ToString().Should().Be("/");
         }
 
         [Fact]
-        public async Task Edit_PostAsyncCallWithModelStateInvalid_ReturnModelToEditView()
+        public async Task Edit_PostAsyncCallWithModelStateInvalid_ShowErrorMessageOnEditView()
         {
             //Arrange
             var toDoList = ToDoListFactory.Create().Single();
@@ -198,13 +196,13 @@ namespace SimpleToDo.Web.IntegrationTest
                     "/ToDoList/Edit/",
                     new FormUrlEncodedContent(formData));
 
-            //Assert                        
+            //Assert                  
             response
                 .Content
                 .ReadAsStringAsync()
                 .Result
                 .Should()
-                .Contain($"value=\"{toDoList.Id.ToString()}\"");
+                .Contain("The Name field is required.");
         }
 
         [Fact]
@@ -235,7 +233,7 @@ namespace SimpleToDo.Web.IntegrationTest
                     "/ToDoList/Edit/",
                     new FormUrlEncodedContent(formData));
 
-            //Assert            
+            //Assert        
             action
                 .Should()
                 .Throw<DbUpdateConcurrencyException>();
@@ -265,7 +263,6 @@ namespace SimpleToDo.Web.IntegrationTest
                     new FormUrlEncodedContent(formData));
 
             //Assert            
-            response.StatusCode.Should().Be(HttpStatusCode.Found);
             response.Headers.Location.ToString().Should().Be("/");
         }
     }

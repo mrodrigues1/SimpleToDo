@@ -7,7 +7,7 @@ namespace SimpleToDo.Model.Entities
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(250)]        
+        [Required, MaxLength(250)]
         public string Name { get; set; }
 
         public virtual List<Task> Tasks { get; set; }

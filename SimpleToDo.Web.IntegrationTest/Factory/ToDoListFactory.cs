@@ -13,6 +13,6 @@ namespace SimpleToDo.Web.IntegrationTest.Factory
                 .Build<ToDoList>()
                 .With(x => x.Id, 0)
                 .With(x => x.Tasks, new List<Task>())
-                .CreateMany<ToDoList>(count);
+                .CreateMany(count);
     }
 }
